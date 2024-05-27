@@ -15,9 +15,10 @@ export class StudentProfilComponent implements OnInit{
   
     ngOnInit(): void {
       // Récupérer les données de l'enseignant depuis le service
-      this.studentService.getStudents(this.idStudent).subscribe(data => {
+      this.studentService.getStudents().subscribe(data => {
         console.log(data)
-        this.studentData = data; // Attribuer les données récupérées à studentdata
+        this.studentData = data; // Attribuer les données récupérées à teacherData
       });
     }
   }
+  

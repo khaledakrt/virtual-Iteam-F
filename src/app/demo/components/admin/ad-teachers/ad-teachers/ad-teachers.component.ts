@@ -1,10 +1,167 @@
 import { Component } from '@angular/core';
-
+import { Teacher } from 'src/app/demo/api/teacher';
+import { TeacherService } from 'src/app/demo/service/teacher.service';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-ad-teachers',
   templateUrl: './ad-teachers.component.html',
-  styleUrls: ['./ad-teachers.component.scss']
+  styleUrls: ['./ad-teachers.component.scss'],
+  providers: [MessageService], // Remove CoursService from providers
 })
 export class AdTeachersComponent {
+  teachers: Teacher[] = [];
+  teacherDialog: boolean = false;
+  deleteTeacherDialog: boolean = false;
+  deleteTeachersDialog: boolean = false;
+  teacher: Teacher = this.initializeTeacher();
+  selectedTeachers: Teacher[] = [];
+  submitted: boolean = false;
+  // Define cols here
+  cols: any[] = [
+    { field: 'nom', header: 'First Name' },
+    { field: 'prenom', header: 'Last Name' },
+    { field: 'email', header: 'Email' },
+    { field: 'password', header: 'Password' },
+    { field: 'role', header: 'Role' },
+    { field: 'specialite', header: 'Specialty' },
+    { field: 'classes', header: 'Classes' },
+    { field: 'vms', header: 'vms' },
 
+    // You can add more columns if needed
+  ];
+  saveTeacher() {
+  this.submitted = true;
+  
+  // Check if all required fields are filled
+  if (this.teacher.nom && this.teacher.prenom && this.teacher.email && this.teacher.password && this.teacher.role && this.teacher.specialite && this.teacher.classes && this.teacher.vms) {
+    this.teacherService.addTeacher(this.teacher).subscribe(
+      () => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Successful',
+          detail: 'Teacher Created',
+          life: 3000
+        });
+        this.loadTeachers();
+        this.teacherDialog = false;
+        this.teacher = this.initializeTeacher();
+      },
+      (error) => {
+        console.error('Error:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Failed to create teacher',
+          life: 3000
+        });
+      }
+    );
+  } else {
+    // Handle case where required fields are not filled
+    this.messageService.add({
+      severity: 'warn',
+      summary: 'Warning',
+      detail: 'Please fill in all required fields',
+      life: 3000
+    });
+  }
+}
+
+  constructor(private teacherService: TeacherService, private messageService: MessageService) {}
+
+  ngOnInit() {
+    this.loadTeachers();
+  }
+
+  loadTeachers() {
+    this.teacherService.getTeachers().subscribe((data) => {
+      this.teachers = data;
+    });
+  }
+
+  openNew() {
+    this.teacher = this.initializeTeacher();
+    this.submitted = false;
+    this.teacherDialog = true;
+  }
+
+  editTeacher(teacher: Teacher) {
+    this.teacher = { ...teacher };
+    this.teacherDialog = true;
+  }
+
+  deleteSelectedTeachers() {
+    if (this.selectedTeachers.length === 1) {
+      this.deleteTeacher(this.selectedTeachers[0]);
+    } else {
+      this.deleteTeachersDialog = true;
+    }
+  }
+
+  deleteTeacher(teacher: Teacher) {
+    this.teacher = { ...teacher };
+    this.deleteTeachersDialog = true;
+  }
+
+  confirmDeleteSelected() {
+    this.deleteTeachersDialog = false;
+    const selectedIds = this.selectedTeachers.map((teacher) => teacher._id);
+    this.teacherService.deleteTeachers(selectedIds).subscribe(
+      () => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Successful',
+          detail: 'Teachers Deleted',
+          life: 3000
+        });
+        this.loadTeachers();
+        this.selectedTeachers = [];
+      },
+      (error) => {
+        console.error(error);
+        // Handle error, display an error message, etc.
+      }
+    );
+  }
+  confirmDelete() {
+    this.deleteTeacherDialog = false;
+    this.teacherService.deleteTeacher(this.teacher._id!).subscribe(() => {
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Successful',
+        detail: 'Teacher Deleted',
+        life: 3000
+      });
+      this.loadTeachers();
+      this.teacher = this.initializeTeacher();
+    });
+  }
+
+  hideDialog() {
+    this.teacherDialog = false;
+    this.submitted = false;
+  }
+
+  
+
+  initializeTeacher(): Teacher {
+    return {
+      nom: '',
+      prenom: '',
+      email: '',
+      password: '',
+      role: '',
+      specialite: '',
+      vms: '',
+
+    };
+  }
+
+  onGlobalFilter(event: any) {
+    // Implement global filtering logic here
+  }
+
+  handlePhotoChange(event: any) {
+    // Implement photo handling logic if needed
+  }
 }

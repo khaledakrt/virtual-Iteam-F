@@ -15,7 +15,7 @@ idTeacher:String;
 
   ngOnInit(): void {
     // Récupérer les données de l'enseignant depuis le service
-    this.teacherService.getTeachers(this.idTeacher).subscribe(data => {
+    this.teacherService.getTeachers().subscribe(data => {
       console.log(data)
       this.teacherData = data; // Attribuer les données récupérées à teacherData
     });
