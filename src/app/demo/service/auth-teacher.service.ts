@@ -20,7 +20,12 @@ role='teacher'
     return this.http.post<any>(this.url + 'teacher/', userData);
   }
   saveDataTeacher(token: any) {
+    console.log('savadata')
+    console.log(token)
+
     let decodedToken: any = this.helper.decodeToken(token);
+    console.log('decodedToken')
+    console.log(decodedToken)
     localStorage.setItem('token_teacher', token);
     localStorage.setItem('role', this.role);
     localStorage.setItem('id_teacher', decodedToken._id);

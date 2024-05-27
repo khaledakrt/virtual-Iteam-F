@@ -1,1 +1,29 @@
-<p>teacher-profil works!</p>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Information</title>
+</head>
+
+<body>
+
+    <div *ngIf="teacherData">
+        <h1>Teacher Information</h1>
+        <ul>
+            <li><strong>Name:</strong> {{ teacherData.nom }}</li>
+            <li><strong>Prenom:</strong> {{ teacherData.prenom }}</li>
+
+            <li><strong>Email:</strong> {{ teacherData.email }}</li>
+            <li><strong>Role:</strong> {{ teacherData.role }}</li>
+            <li><strong>Specialite:</strong> {{ teacherData.specialite }}</li>
+        </ul>
+    </div>
+
+    <!-- Angular Script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+
+</body>
+
+</html>

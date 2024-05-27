@@ -20,7 +20,12 @@ export class AuthStudentService {
     return this.http.post<any>(this.url + 'student/', userData);
   }
   saveDataStudent(token: any) {
+      console.log('savadata')
+      console.log(token)
+
     let decodedToken: any = this.helper.decodeToken(token);
+    console.log('decodedToken')
+    console.log(decodedToken)
     localStorage.setItem('token_student', token);
     localStorage.setItem('role', this.role);
     localStorage.setItem('id_student', decodedToken._id);

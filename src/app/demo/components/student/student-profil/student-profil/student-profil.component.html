@@ -1,1 +1,28 @@
-<p>student-profil works!</p>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Information</title>
+</head>
+
+<body>
+
+    <div *ngIf="studentData">
+        <h1>Student Information</h1>
+        <ul>
+            <li><strong>Name:</strong> {{ studentData.nom }}</li>
+            <li><strong>Prenom:</strong> {{ studentData.prenom }}</li>
+
+            <li><strong>Email:</strong> {{ studentData.email }}</li>
+            <li><strong>Role:</strong> {{ studentData.role }}</li>
+        </ul>
+    </div>
+
+    <!-- Angular Script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+
+</body>
+
+</html>

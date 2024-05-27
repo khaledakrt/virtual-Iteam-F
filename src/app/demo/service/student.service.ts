@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-// Définition du modèle Teacher
-interface Teacher {
+// Définition du modèle student
+interface Student {
   _id: string;
   id: string;
   nom: string;
@@ -15,13 +15,13 @@ interface Teacher {
 @Injectable({
   providedIn: 'root'
 })
-export class TeacherService {
+export class StudentService {
 
-  private apiUrl = 'http://localhost:3000/teacher';
+  private apiUrl = 'http://localhost:3000/student';
 
   constructor(private http: HttpClient) { }
 
-  getTeachers(id): Observable<Teacher[]> {
-    return this.http.get<Teacher[]>(`${this.apiUrl}/${id}`);
+  getStudents(id): Observable<Student[]> {
+    return this.http.get<Student[]>(`${this.apiUrl}/${id}`);
   }
 }

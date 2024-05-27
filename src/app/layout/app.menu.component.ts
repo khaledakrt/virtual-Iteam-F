@@ -35,7 +35,9 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'student',
                 items: [
-                    { label: 'My-virtual machines', icon: 'pi pi-fw pi-home', routerLink: ['/student/profil'] },
+                    { label: 'My-virtual machines', icon: 'pi pi-fw pi-home', routerLink: ['/student/my-vms'] }]},
+                    {
+                        items: [
                     { label: 'profil', icon: 'pi pi-fw pi-home', routerLink: ['/student/profil'] },
                     { label: 'my-teachers', icon: 'pi pi-fw pi-home', routerLink: ['/student/teachers'] }
                 ]
