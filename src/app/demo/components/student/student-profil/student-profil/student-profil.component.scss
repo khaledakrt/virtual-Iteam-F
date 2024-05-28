@@ -1,0 +1,24 @@
+.profile-card {
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: left; /* Alignez le texte à gauche */
+}
+
+.profile-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Alignez la carte à gauche */
+    margin-top: 1rem;
+}
+
+.photo-placeholder {
+    width: 150px;
+    height: 150px;
+    border: 2px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 2rem;
+    font-size: 1rem;
+}

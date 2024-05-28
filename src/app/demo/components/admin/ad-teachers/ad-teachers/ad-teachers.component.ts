@@ -1,14 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Teacher } from 'src/app/demo/api/teacher';
 import { TeacherService } from 'src/app/demo/service/teacher.service';
 import { MessageService } from 'primeng/api';
+
 @Component({
   selector: 'app-ad-teachers',
   templateUrl: './ad-teachers.component.html',
   styleUrls: ['./ad-teachers.component.scss'],
-  providers: [MessageService], // Remove CoursService from providers
+  providers: [MessageService],
 })
-export class AdTeachersComponent {
+export class AdTeachersComponent implements OnInit {
   teachers: Teacher[] = [];
   teacherDialog: boolean = false;
   deleteTeacherDialog: boolean = false;
@@ -16,7 +17,7 @@ export class AdTeachersComponent {
   teacher: Teacher = this.initializeTeacher();
   selectedTeachers: Teacher[] = [];
   submitted: boolean = false;
-  // Define cols here
+
   cols: any[] = [
     { field: 'nom', header: 'First Name' },
     { field: 'prenom', header: 'Last Name' },
@@ -26,46 +27,7 @@ export class AdTeachersComponent {
     { field: 'specialite', header: 'Specialty' },
     { field: 'classes', header: 'Classes' },
     { field: 'vms', header: 'vms' },
-
-    // You can add more columns if needed
   ];
-  saveTeacher() {
-  this.submitted = true;
-  
-  // Check if all required fields are filled
-  if (this.teacher.nom && this.teacher.prenom && this.teacher.email && this.teacher.password && this.teacher.role && this.teacher.specialite && this.teacher.classes && this.teacher.vms) {
-    this.teacherService.addTeacher(this.teacher).subscribe(
-      () => {
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'Teacher Created',
-          life: 3000
-        });
-        this.loadTeachers();
-        this.teacherDialog = false;
-        this.teacher = this.initializeTeacher();
-      },
-      (error) => {
-        console.error('Error:', error);
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Failed to create teacher',
-          life: 3000
-        });
-      }
-    );
-  } else {
-    // Handle case where required fields are not filled
-    this.messageService.add({
-      severity: 'warn',
-      summary: 'Warning',
-      detail: 'Please fill in all required fields',
-      life: 3000
-    });
-  }
-}
 
   constructor(private teacherService: TeacherService, private messageService: MessageService) {}
 
@@ -90,6 +52,70 @@ export class AdTeachersComponent {
     this.teacherDialog = true;
   }
 
+  saveTeacher() {
+    this.submitted = true;
+
+    if (this.teacher.nom && this.teacher.prenom && this.teacher.email && this.teacher.password && this.teacher.role && this.teacher.specialite && this.teacher.classes && this.teacher.vms) {
+      if (this.teacher._id) {
+        // Update existing teacher
+        this.teacherService.updateTeacher(this.teacher._id, this.teacher).subscribe(
+          () => {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Successful',
+              detail: 'Teacher Updated',
+              life: 3000
+            });
+            this.loadTeachers();
+            this.teacherDialog = false;
+            this.teacher = this.initializeTeacher();
+          },
+          (error) => {
+            console.error('Error:', error);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Failed to update teacher',
+              life: 3000
+            });
+          }
+        );
+      } else {
+        // Add new teacher
+        this.teacherService.addTeacher(this.teacher).subscribe(
+          () => {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Successful',
+              detail: 'Teacher Created',
+              life: 3000
+            });
+            this.loadTeachers();
+            this.teacherDialog = false;
+            this.teacher = this.initializeTeacher();
+          },
+          (error) => {
+            console.error('Error:', error);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Failed to create teacher',
+              life: 3000
+            });
+          }
+        );
+      }
+    } else {
+      // Handle case where required fields are not filled
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Warning',
+        detail: 'Please fill in all required fields',
+        life: 3000
+      });
+    }
+  }
+
   deleteSelectedTeachers() {
     if (this.selectedTeachers.length === 1) {
       this.deleteTeacher(this.selectedTeachers[0]);
@@ -100,7 +126,7 @@ export class AdTeachersComponent {
 
   deleteTeacher(teacher: Teacher) {
     this.teacher = { ...teacher };
-    this.deleteTeachersDialog = true;
+    this.deleteTeacherDialog = true;
   }
 
   confirmDeleteSelected() {
@@ -123,6 +149,7 @@ export class AdTeachersComponent {
       }
     );
   }
+
   confirmDelete() {
     this.deleteTeacherDialog = false;
     this.teacherService.deleteTeacher(this.teacher._id!).subscribe(() => {
@@ -142,18 +169,17 @@ export class AdTeachersComponent {
     this.submitted = false;
   }
 
-  
-
   initializeTeacher(): Teacher {
     return {
+      _id: '',
       nom: '',
       prenom: '',
       email: '',
       password: '',
       role: '',
       specialite: '',
-      vms: '',
-
+      classes: '',
+      vms: ''
     };
   }
 

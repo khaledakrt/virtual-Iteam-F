@@ -27,13 +27,9 @@ export class AdStudentsComponent implements OnInit {
     { field: 'classe', header: 'Classe' },
     { field: 'vms', header: 'vms' },
     { field: 'photo', header: 'photo' },
-
   ];
 
-  constructor(
-    private studentService: StudentService,
-    private messageService: MessageService
-  ) {}
+  constructor(private studentService: StudentService, private messageService: MessageService) {}
 
   ngOnInit() {
     this.loadStudents();
@@ -54,6 +50,70 @@ export class AdStudentsComponent implements OnInit {
   editStudent(student: Student) {
     this.student = { ...student };
     this.studentDialog = true;
+  }
+
+  saveStudent() {
+    this.submitted = true;
+
+    if (this.student.nom && this.student.prenom && this.student.email && this.student.password && this.student.role && this.student.classe && this.student.vms && this.student.photo) {
+      if (this.student._id) {
+        // Update existing student
+        this.studentService.updateStudent(this.student._id,this.student).subscribe(
+          () => {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Successful',
+              detail: 'Student Updated',
+              life: 3000
+            });
+            this.loadStudents();
+            this.studentDialog = false;
+            this.student = this.initializeStudent();
+          },
+          (error) => {
+            console.error('Error:', error);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Failed to update student',
+              life: 3000
+            });
+          }
+        );
+      } else {
+        // Add new student
+        this.studentService.addStudent(this.student).subscribe(
+          () => {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Successful',
+              detail: 'Student Created',
+              life: 3000
+            });
+            this.loadStudents();
+            this.studentDialog = false;
+            this.student = this.initializeStudent();
+          },
+          (error) => {
+            console.error('Error:', error);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Failed to create student',
+              life: 3000
+            });
+          }
+        );
+      }
+    } else {
+      // Handle case where required fields are not filled
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Warning',
+        detail: 'Please fill in all required fields',
+        life: 3000
+      });
+    }
   }
 
   deleteSelectedStudents() {
@@ -78,46 +138,30 @@ export class AdStudentsComponent implements OnInit {
           severity: 'success',
           summary: 'Successful',
           detail: 'Students Deleted',
-          life: 3000,
+          life: 3000
         });
         this.loadStudents();
         this.selectedStudents = [];
       },
       (error) => {
         console.error(error);
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Failed to delete students',
-          life: 3000,
-        });
+        // Handle error, display an error message, etc.
       }
     );
   }
 
   confirmDelete() {
     this.deleteStudentDialog = false;
-    this.studentService.deleteStudent(this.student._id!).subscribe(
-      () => {
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'Student Deleted',
-          life: 3000,
-        });
-        this.loadStudents();
-        this.student = this.initializeStudent();
-      },
-      (error) => {
-        console.error(error);
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Failed to delete student',
-          life: 3000,
-        });
-      }
-    );
+    this.studentService.deleteStudent(this.student._id!).subscribe(() => {
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Successful',
+        detail: 'Student Deleted',
+        life: 3000
+      });
+      this.loadStudents();
+      this.student = this.initializeStudent();
+    });
   }
 
   hideDialog() {
@@ -125,61 +169,17 @@ export class AdStudentsComponent implements OnInit {
     this.submitted = false;
   }
 
-  saveStudent() {
-    this.submitted = true;
-
-    if (
-      this.student.nom &&
-      this.student.prenom &&
-      this.student.email &&
-      this.student.password &&
-      this.student.role &&
-      this.student.classe &&
-      this.student.vms &&
-      this.student.photo
-    ) {
-      this.studentService.addStudent(this.student).subscribe(
-        () => {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Successful',
-            detail: 'Student Created',
-            life: 3000,
-          });
-          this.loadStudents();
-          this.studentDialog = false;
-          this.student = this.initializeStudent();
-        },
-        (error) => {
-          console.error('Error:', error);
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Failed to create student',
-            life: 3000,
-          });
-        }
-      );
-    } else {
-      this.messageService.add({
-        severity: 'warn',
-        summary: 'Warning',
-        detail: 'Please fill in all required fields',
-        life: 3000,
-      });
-    }
-  }
-
   initializeStudent(): Student {
     return {
+      _id: '',
       nom: '',
       prenom: '',
       email: '',
       password: '',
       role: '',
-      classe: '', // Ajouté pour correspondre aux champs requis
+      classe: '',
       vms: '',
-      photo: '' // Ajouté pour correspondre aux champs requis
+      photo: ''
     };
   }
 

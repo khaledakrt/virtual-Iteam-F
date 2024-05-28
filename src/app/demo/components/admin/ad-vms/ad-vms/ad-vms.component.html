@@ -1,1 +1,67 @@
 <p>ad-vms works!</p>
+<div class="grid">
+    <div class="col-12">
+      <div class="card px-6 py-6">
+        <p-toast></p-toast>
+        <p-toolbar styleClass="mb-4">
+          <ng-template pTemplate="left">
+            <div class="my-2">
+              <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+              <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedvms()" [disabled]="!selectedVMs || !selectedVMs.length"></button>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="right"></ng-template>
+        </p-toolbar>
+  
+        <p-table [value]="vms" [columns]="vmCols" responsiveLayout="scroll" [globalFilterFields]="['name','private_ips','floating_ips']" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedvms" selectionMode="multiple" [rowHover]="true" dataKey="_id">
+          <ng-template pTemplate="caption">
+            <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+              <h5 class="m-0">Manage VMs</h5>
+              <span class="block mt-2 md:mt-0 p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="onGlobalFilter($event)" placeholder="Search..." class="w-full sm:w-auto" />
+              </span>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="width: 3rem">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+              </th>
+              <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
+              <th pSortableColumn="private_ips">Private IPs <p-sortIcon field="private_ips"></p-sortIcon></th>
+              <th pSortableColumn="floating_ips">Floating IPs <p-sortIcon field="floating_ips"></p-sortIcon></th>
+              <th></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-vm>
+            <tr>
+              <td>
+                <p-tableCheckbox [value]="vm"></p-tableCheckbox>
+              </td>
+              <td style="width: 20%;">
+                <span class="p-column-title">Name</span>
+                {{vm.name}}
+              </td>
+              <td style="width: 20%;">
+                <span class="p-column-title">Private IPs</span>
+                {{vm.private_ips}}
+              </td>
+              <td style="width: 20%;">
+                <span class="p-column-title">Floating IPs</span>
+                {{vm.floating_ips}}
+              </td>
+              <td>
+                <div class="flex">
+                  <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editVM(vm)"></button>
+                  <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteVM(vm)"></button>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
+  

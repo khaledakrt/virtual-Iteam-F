@@ -1,29 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher Information</title>
-</head>
-
-<body>
-
-    <div *ngIf="teacherData">
-        <h1>Teacher Information</h1>
-        <ul>
-            <li><strong>Name:</strong> {{ teacherData.nom }}</li>
-            <li><strong>Prenom:</strong> {{ teacherData.prenom }}</li>
-
-            <li><strong>Email:</strong> {{ teacherData.email }}</li>
-            <li><strong>Role:</strong> {{ teacherData.role }}</li>
-            <li><strong>Specialite:</strong> {{ teacherData.specialite }}</li>
-        </ul>
+<div class="grid">
+    <div class="col-12">
+      <div class="card profile-card">
+        <h2>Teacher Profile</h2>
+        <div class="profile-container">
+          <div class="photo-placeholder">
+            Photo doit etre ici
+          </div>
+          <div class="teacher-details">
+            <div><strong>Nom:</strong> {{ teacherData?.nom }}</div>
+            <div><strong>Prenom:</strong> {{ teacherData?.prenom }}</div>
+            <div><strong>Email:</strong> {{ teacherData?.email }}</div>
+            <div><strong>Role:</strong> {{ teacherData?.role }}</div>
+            <div><strong>Specialite:</strong> {{ teacherData?.specialite }}</div>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <!-- Angular Script -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
-
-</body>
-
-</html>
+  </div>
+  

@@ -31,4 +31,8 @@ export class TeacherService {
   deleteTeachers(ids: string[]): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/deleteMany`, { ids });
   }
+// Add this method to get a teacher by ID
+getTeacherById(id: string): Observable<Teacher> {
+  return this.http.get<Teacher>(`${this.apiUrl}/${id}`);
+}
 }
