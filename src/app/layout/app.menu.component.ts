@@ -62,7 +62,7 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'Content Management',
                 items: [
-                    { label: 'my Virtual', icon: 'pi pi-fw pi-id-card', routerLink: ['/teacher/formation'] },
+                    { label: 'my Requests', icon: 'pi pi-fw pi-id-card', routerLink: ['/teacher/my-requests'] },
                     { label: 'my Students', icon: 'pi pi-fw pi-check-square', routerLink: ['/teacher/student/'] },
                     { label: 'profil', icon: 'pi pi-fw pi-check-square', routerLink: ['/teacher/profil'] },
                     { label: 'Logout', icon: 'pi pi-fw pi-id-card', command: () => this.logout() }

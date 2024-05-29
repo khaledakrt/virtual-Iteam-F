@@ -1,3 +1,4 @@
+//ad-teachers.component.html
 <div class="grid">
   <div class="col-12">
     <div class="card px-6 py-6">
@@ -112,10 +113,14 @@
       <input type="text" pInputText id="vms" [(ngModel)]="teacher.vms" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !teacher.vms}" />
       <small class="ng-dirty ng-invalid" *ngIf="submitted && !teacher.vms">Specialty is required.</small>
     </div>
-    <div class="field">
-      <label for="photo">Photo</label>
-      <input type="file" pInputText id="photo" (change)="handlePhotoChange($event)" />
-    </div>
+
+
+     <div class="field">
+    <label for="photo">Photo</label>
+    <input type="file" (change)="handlePhotoChange($event)" />
+  </div>
+
+
   </ng-template>
   <ng-template pTemplate="footer">
     <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>

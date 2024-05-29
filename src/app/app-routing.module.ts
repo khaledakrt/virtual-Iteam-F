@@ -38,7 +38,7 @@ import { AdminDashboardComponent } from './demo/components/admin/admin-dashboard
               children: [
                 { path: 'student', loadChildren: () => import('./demo/components/teacher/my-student/my-student.module').then(m => m.MyStudentModule) },
                 { path: 'profil', loadChildren: () => import('./demo/components/teacher/teacher-profil/teacher-profil.module').then(m => m.TeacherProfilModule) },
-                { path: 'my-vms', loadChildren: () => import('./demo/components/teacher/vm-request/vm-request.module').then(m => m.VmRequestModule) }
+                { path: 'my-requests', loadChildren: () => import('./demo/components/teacher/my-requests/my-requests.module').then(m => m.MyRequestsModule) }
 
 
               ]

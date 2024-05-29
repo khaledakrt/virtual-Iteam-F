@@ -17,6 +17,9 @@ export class AdStudentsComponent implements OnInit {
   student: Student = this.initializeStudent();
   selectedStudents: Student[] = [];
   submitted: boolean = false;
+  selectedFile: File | null = null;
+  photo: File | null = null;
+  //levels: any[] = []; // Add this line to hold levels
 
   cols: any[] = [
     { field: 'nom', header: 'First Name' },
@@ -26,20 +29,35 @@ export class AdStudentsComponent implements OnInit {
     { field: 'role', header: 'Role' },
     { field: 'classe', header: 'Classe' },
     { field: 'vms', header: 'vms' },
-    { field: 'photo', header: 'photo' },
+    //{ field: 'photo', header: 'photo' },
+    //{ field: 'levels', header: 'levels' },
+
   ];
 
   constructor(private studentService: StudentService, private messageService: MessageService) {}
 
   ngOnInit() {
     this.loadStudents();
+    //this.loadLevels(); // Call the method to load levels when component initializes
+  }
+  getStudentPhotoUrl(photoFileName: string): string {
+    return this.studentService.getStudentPhotoUrl(photoFileName);
   }
 
   loadStudents() {
     this.studentService.getStudents().subscribe((data) => {
       this.students = data;
+      //console.log(this.levels)
+
     });
   }
+
+  // loadLevels() {
+  //   // Call your service method to fetch levels
+  //   this.studentService.getLevels().subscribe((data) => {
+  //     this.levels = data;
+  //   });
+  // }
 
   openNew() {
     this.student = this.initializeStudent();
@@ -55,7 +73,18 @@ export class AdStudentsComponent implements OnInit {
   saveStudent() {
     this.submitted = true;
 
-    if (this.student.nom && this.student.prenom && this.student.email && this.student.password && this.student.role && this.student.classe && this.student.vms && this.student.photo) {
+    if (this.student.nom && this.student.prenom && this.student.email && this.student.password && this.student.role && this.student.classe && this.student.vms ) {
+      const formData = new FormData();
+      formData.append('nom', this.student.nom);
+      formData.append('prenom', this.student.prenom);
+      formData.append('email', this.student.email);
+      formData.append('password', this.student.password);
+      formData.append('role', this.student.role);
+      formData.append('classe', this.student.classe);
+      formData.append('vms', this.student.vms);
+      if (this.photo) {
+        formData.append('photo', this.photo);
+      }
       if (this.student._id) {
         // Update existing student
         this.studentService.updateStudent(this.student._id,this.student).subscribe(
@@ -82,7 +111,7 @@ export class AdStudentsComponent implements OnInit {
         );
       } else {
         // Add new student
-        this.studentService.addStudent(this.student).subscribe(
+        this.studentService.addStudent(formData).subscribe(
           () => {
             this.messageService.add({
               severity: 'success',
@@ -188,6 +217,6 @@ export class AdStudentsComponent implements OnInit {
   }
 
   handlePhotoChange(event: any) {
-    // Implement photo handling logic if needed
+    this.photo = event.target.files[0]; // Update this.photo instead of this.selectedFile
   }
 }

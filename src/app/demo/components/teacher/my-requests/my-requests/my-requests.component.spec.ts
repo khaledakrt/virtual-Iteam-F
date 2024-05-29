@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VmRequestComponent } from './vm-request.component';
+import { MyRequestsComponent } from './my-requests.component';
 
 describe('VmRequestComponent', () => {
-  let component: VmRequestComponent;
-  let fixture: ComponentFixture<VmRequestComponent>;
+  let component: MyRequestsComponent;
+  let fixture: ComponentFixture<MyRequestsComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [VmRequestComponent]
+      declarations: [MyRequestsComponent]
     });
-    fixture = TestBed.createComponent(VmRequestComponent);
+    fixture = TestBed.createComponent(MyRequestsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

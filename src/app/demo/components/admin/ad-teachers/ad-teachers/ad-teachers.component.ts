@@ -1,3 +1,4 @@
+// ad-teachers.component.ts
 import { Component, OnInit } from '@angular/core';
 import { Teacher } from 'src/app/demo/api/teacher';
 import { TeacherService } from 'src/app/demo/service/teacher.service';
@@ -17,6 +18,9 @@ export class AdTeachersComponent implements OnInit {
   teacher: Teacher = this.initializeTeacher();
   selectedTeachers: Teacher[] = [];
   submitted: boolean = false;
+  selectedFile: File | null = null;
+  photo: File | null = null;
+
 
   cols: any[] = [
     { field: 'nom', header: 'First Name' },
@@ -34,7 +38,9 @@ export class AdTeachersComponent implements OnInit {
   ngOnInit() {
     this.loadTeachers();
   }
-
+  getTeacherPhotoUrl(photoFileName: string): string {
+    return this.teacherService.getTeacherPhotoUrl(photoFileName);
+  }
   loadTeachers() {
     this.teacherService.getTeachers().subscribe((data) => {
       this.teachers = data;
@@ -52,13 +58,30 @@ export class AdTeachersComponent implements OnInit {
     this.teacherDialog = true;
   }
 
+  handlePhotoChange(event: any) {
+    this.photo = event.target.files[0]; // Update this.photo instead of this.selectedFile
+  }
+
   saveTeacher() {
     this.submitted = true;
 
     if (this.teacher.nom && this.teacher.prenom && this.teacher.email && this.teacher.password && this.teacher.role && this.teacher.specialite && this.teacher.classes && this.teacher.vms) {
+      const formData = new FormData();
+      formData.append('nom', this.teacher.nom);
+      formData.append('prenom', this.teacher.prenom);
+      formData.append('email', this.teacher.email);
+      formData.append('password', this.teacher.password);
+      formData.append('role', this.teacher.role);
+      formData.append('specialite', this.teacher.specialite);
+      formData.append('classes', this.teacher.classes);
+      formData.append('vms', this.teacher.vms);
+      if (this.photo) {
+        formData.append('photo', this.photo);
+      }
+
       if (this.teacher._id) {
         // Update existing teacher
-        this.teacherService.updateTeacher(this.teacher._id, this.teacher).subscribe(
+        this.teacherService.updateTeacher(this.teacher._id, formData).subscribe(
           () => {
             this.messageService.add({
               severity: 'success',
@@ -82,7 +105,7 @@ export class AdTeachersComponent implements OnInit {
         );
       } else {
         // Add new teacher
-        this.teacherService.addTeacher(this.teacher).subscribe(
+        this.teacherService.addTeacher(formData).subscribe(
           () => {
             this.messageService.add({
               severity: 'success',
@@ -179,15 +202,12 @@ export class AdTeachersComponent implements OnInit {
       role: '',
       specialite: '',
       classes: '',
-      vms: ''
+      vms: '',
+      photo: '' // Ajout de la propriété photo
     };
   }
 
   onGlobalFilter(event: any) {
     // Implement global filtering logic here
-  }
-
-  handlePhotoChange(event: any) {
-    // Implement photo handling logic if needed
   }
 }

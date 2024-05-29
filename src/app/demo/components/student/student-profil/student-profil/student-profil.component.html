@@ -5,9 +5,10 @@
       <div class="profile-container">
         <div class="profile-container">
           <div class="photo-placeholder">
-            Photo doit etre ici
+            <!-- Use the correct method name -->
+            <img src="{{ getStudentPhotoUrl(studentData?.photo) }}" alt="Student Photo">
           </div>
-          <div class="teacher-details">
+          <div class="student-details">
           <div><strong>Nom:</strong> {{ studentData?.nom }}</div>
           <div><strong>Prénom:</strong> {{ studentData?.prenom }}</div>
           <div><strong>Email:</strong> {{ studentData?.email }}</div>

@@ -1,20 +1,22 @@
 <div class="grid">
-    <div class="col-12">
-      <div class="card profile-card">
-        <h2>Teacher Profile</h2>
+  <div class="col-12">
+    <div class="card profile-card">
+      <h2>Teacher Profile</h2>
+      <div class="profile-container">
         <div class="profile-container">
           <div class="photo-placeholder">
-            Photo doit etre ici
+            <!-- Use the correct method name -->
+            <img src="{{ getTeacherPhotoUrl(teacherData?.photo) }}" alt="Teacher Photo">
           </div>
           <div class="teacher-details">
+            <!-- Replace references to studentData with teacherData -->
             <div><strong>Nom:</strong> {{ teacherData?.nom }}</div>
-            <div><strong>Prenom:</strong> {{ teacherData?.prenom }}</div>
+            <div><strong>Prénom:</strong> {{ teacherData?.prenom }}</div>
             <div><strong>Email:</strong> {{ teacherData?.email }}</div>
-            <div><strong>Role:</strong> {{ teacherData?.role }}</div>
-            <div><strong>Specialite:</strong> {{ teacherData?.specialite }}</div>
+            <div><strong>Classe:</strong> {{ teacherData?.classes }}</div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  
+</div>
