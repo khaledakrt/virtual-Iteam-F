@@ -10,73 +10,22 @@ import { MessageService } from 'primeng/api';
   providers: [MessageService],
 })
 export class AdVmsComponent implements OnInit {
-  vms: Vm[] = [];
-  vmDialog: boolean = false;
-  deleteVmDialog: boolean = false;
-  deleteVmsDialog: boolean = false;
-  vm: Vm = this.initializeVm();
-  selectedvms: Vm[] = [];
-  submitted: boolean = false;
+  instances: any[] = [];
 
-  vmCols: any[] = [
-    { field: 'name', header: 'Name' },
-    { field: 'private_ips', header: 'Private IPs' },
-    { field: 'floating_ips', header: 'Floating IPs' },
-    // Ajoutez d'autres colonnes si nécessaire pour les propriétés spécifiques aux VMs
-  ];
+  constructor(private VmService: VmService) { }
 
-  constructor(private vmService: VmService, private messageService: MessageService) {}
-
-  ngOnInit() {
-    this.loadVms();
+  ngOnInit(): void {
+    this.VmService.getInstances().subscribe(
+      data => {
+        this.instances = data;
+      },
+      error => {
+        console.error('Error fetching instances:', error);
+      }
+    );
   }
+  selectedInstances: any[] = []; // Define selectedInstances property
 
-  loadVms() {
-    this.vmService.getVms().subscribe((data) => {
-      this.vms = data;
-    });
-  }
-  openNew() {
-    this.vm = this.initializeVm();
-    this.submitted = false;
-    this.vmDialog = true;
-  }
+  // Other component logic goes here
 
-  
-  
-
-  deleteSelectedVms() {
-    // Logique de suppression similaire à celle du composant des enseignants (teachers)
-  }
-
-  deleteVm(vm: Vm) {
-    // Logique de suppression similaire à celle du composant des enseignants (teachers)
-  }
-
-  confirmDeleteSelected() {
-    // Logique de suppression similaire à celle du composant des enseignants (teachers)
-  }
-
-  confirmDelete() {
-    // Logique de suppression similaire à celle du composant des enseignants (teachers)
-  }
-
-  hideDialog() {
-    this.vmDialog = false;
-    this.submitted = false;
-  }
-
-  initializeVm(): Vm {
-    return {
-      _id: '',
-      name: '',
-      private_ips: '',
-      floating_ips: '',
-      // Initialisez d'autres propriétés VM si nécessaire
-    };
-  }
-
-  onGlobalFilter(event: any) {
-    // Implémentez la logique de filtrage global si nécessaire
-  }
 }

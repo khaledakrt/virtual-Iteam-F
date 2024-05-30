@@ -1,44 +1,25 @@
 // ad-add-users.component.ts
-import { Component } from '@angular/core';
-import { UserService } from 'src/app/demo/service/user.service';
+
+import { Component, OnInit } from '@angular/core';
+import { AdAddUsersService } from 'src/app/demo/service/instances.service';
+
 @Component({
   selector: 'app-ad-add-users',
   templateUrl: './ad-add-users.component.html',
   styleUrls: ['./ad-add-users.component.scss']
 })
-export class AdAddUsersComponent {
-  nom: string = '';
-  prenom: string = '';
-  email: string = '';
-  password: string = '';
-  role: string = 'student';
-  photo: string = '';
+export class AdAddUsersComponent implements OnInit {
+  instances: any[] = [];
 
-  constructor(private userService: UserService) {}
+  constructor(private adAddUsersService: AdAddUsersService) { }
 
-  registerUser(): void {
-    const newUser = {
-      nom: this.nom,
-      prenom: this.prenom,
-      email: this.email,
-      password: this.password,
-      role: this.role,
-      photo: this.photo
-    };
-
-    this.userService.registerUser(newUser).subscribe(
-      () => {
-        console.log('User registered successfully');
-        // Reset form fields after successful registration
-        this.nom = '';
-        this.prenom = '';
-        this.email = '';
-        this.password = '';
-        this.role = 'student';
-        this.photo = '';
+  ngOnInit(): void {
+    this.adAddUsersService.getInstances().subscribe(
+      data => {
+        this.instances = data;
       },
-      (error) => {
-        console.error('Error registering user', error);
+      error => {
+        console.error('Error fetching instances:', error);
       }
     );
   }

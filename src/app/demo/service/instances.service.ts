@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class VmService {
+export class AdAddUsersService {
   private instancesUrl = 'http://localhost:3000/instances';
 
   constructor(private http: HttpClient) { }

@@ -3,47 +3,49 @@
     <div class="card px-6 py-6">
       <div class="lab-form-card">
         <h1 class="form-title">Demande de création nouveau lab</h1>
-        <form class="lab-form">
-            <div class="field">
-                <label for="senderName">Nom de l'expéditeur:</label>
-                <input type="text" id="senderName" name="senderName" placeholder="Entrez votre nom" required
-                       [value]="teacherData?.nom" readonly>
-            </div>
-              
+        <form (ngSubmit)="submitForm()" #form="ngForm">
+          <div class="field">
+            <label for="senderName">Nom de l'expéditeur:</label>
+            <input type="text" id="senderName" name="senderName" placeholder="Entrez votre nom" [(ngModel)]="formData.senderName" readonly>
+          </div>
           <div class="field">
             <label for="groupe">Groupe:</label>
-            <input type="text" id="groupe" name="groupe" placeholder="Entrez le nom du groupe" required>
+            <input type="text" id="groupe" name="groupe" placeholder="Entrez le nom du groupe" [(ngModel)]="formData.groupe" required>
           </div>
           <div class="field">
             <label for="nombreLabs">Nombre de labs:</label>
-            <input type="number" id="nombreLabs" name="nombreLabs" placeholder="Entrez le nombre de labs" required>
+            <input type="number" id="nombreLabs" name="nombreLabs" placeholder="Entrez le nombre de labs" [(ngModel)]="formData.nombreLabs" required>
           </div>
           <div class="field">
-            <label for="systemeExploitation">Système d'exploitation:</label>
-            <input type="text" id="systemeExploitation" name="systemeExploitation" placeholder="Entrez le système d'exploitation" required>
-          </div>
-          <div class="field">
-            <label for="baseDonnee">Base de données:</label>
-            <select id="baseDonnee" name="baseDonnee" required>
-              <option value="" disabled selected>Choisissez une base de données</option>
-              <option value="database1">Database 1</option>
-              <option value="database2">Database 2</option>
+            <label for="systemExploitation">Système d'exploitation:</label>
+            <select id="systemExploitation" name="systemExploitation" [(ngModel)]="formData.systemExploitation" required>
+              <option value="" disabled selected>Choisissez Système d'exploitation</option>
+              <option value="Windows">Windows</option>
+              <option value="Ubuntu">Ubuntu</option>
             </select>
           </div>
           <div class="field">
-            <label for="runtimeEnvironnement">Run time Environnement:</label>
-            <select id="runtimeEnvironnement" name="runtimeEnvironnement" required>
+            <label for="baseDonnee">Base de données:</label>
+            <select id="baseDonnee" name="baseDonnee" [(ngModel)]="formData.baseDonnee" required>
+              <option value="" disabled selected>Choisissez une base de données</option>
+              <option value="Database 1">Database 1</option>
+              <option value="Database 2">Database 2</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="runTimeEnvironnement">Run time Environnement:</label>
+            <select id="runTimeEnvironnement" name="runTimeEnvironnement" [(ngModel)]="formData.runTimeEnvironnement" required>
               <option value="" disabled selected>Choisissez un environnement d'exécution</option>
-              <option value="runenv1">Run env 1</option>
-              <option value="runenv2">Run env 2</option>
+              <option value="Run env 1">Run env 1</option>
+              <option value="Run env 2">Run env 2</option>
             </select>
           </div>
           <div class="field">
             <label for="webServer">Web Server:</label>
-            <select id="webServer" name="webServer" required>
+            <select id="webServer" name="webServer" [(ngModel)]="formData.webServer" required>
               <option value="" disabled selected>Choisissez un serveur web</option>
-              <option value="webserver1">Web Server 1</option>
-              <option value="webserver2">Web Server 2</option>
+              <option value="Web Server 1">Web Server 1</option>
+              <option value="Web Server 2">Web Server 2</option>
             </select>
           </div>
           <button type="submit">Envoyer</button>

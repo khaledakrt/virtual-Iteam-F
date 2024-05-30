@@ -3,8 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdAddUsersComponent } from './ad-add-users/ad-add-users.component';
 
-const routes: Routes = [
-  { path: '', component: AdAddUsersComponent }
+const routes: Routes = [ { path: '', component: AdAddUsersComponent }
 ];
 
 @NgModule({

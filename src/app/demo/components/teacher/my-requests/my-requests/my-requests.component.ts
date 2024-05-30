@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { TeacherService } from 'src/app/demo/service/teacher.service';
-import { Teacher } from 'src/app/demo/api/teacher';
+import { HttpClient } from '@angular/common/http';
+import { jwtDecode } from 'jwt-decode'; // Utilisez la syntaxe { jwtDecode }
 
 @Component({
   selector: 'app-my-requests',
@@ -8,23 +8,34 @@ import { Teacher } from 'src/app/demo/api/teacher';
   styleUrls: ['./my-requests.component.scss']
 })
 export class MyRequestsComponent implements OnInit {
-  teacherData: Teacher | null = null;
-  idTeacher: string | null;
+  formData = {
+    senderName: '',
+    groupe: '',
+    nombreLabs: '',
+    systemExploitation: '',
+    baseDonnee: '',
+    runTimeEnvironnement: '',
+    webServer: ''
+  };
 
-  constructor(private teacherService: TeacherService) {
-    this.idTeacher = localStorage.getItem('id_teacher');
-  }
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    if (this.idTeacher) {
-      this.teacherService.getTeacherById(this.idTeacher).subscribe(data => {
-        if (data.photo) {
-          data.photo = data.photo.replace(/\\/g, '/');
-        }
-        this.teacherData = data;
-      });
-    } else {
-      console.error('No teacher ID found in localStorage');
+    const token = localStorage.getItem('token_teacher');
+    if (token) {
+      const decodedToken: any = jwtDecode(token); // Utilisez jwtDecode sans .default
+      this.formData.senderName = decodedToken.name;
     }
+  }
+
+  submitForm(): void {
+    this.http.post('http://localhost:3000/request', this.formData).subscribe(
+      response => {
+        console.log('Request created successfully:', response);
+      },
+      error => {
+        console.error('Error creating request:', error);
+      }
+    );
   }
 }

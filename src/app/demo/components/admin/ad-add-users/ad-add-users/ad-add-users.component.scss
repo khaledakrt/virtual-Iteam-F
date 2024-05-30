@@ -1,34 +1,23 @@
-/* ad-add-users.component.scss */
-.add-user-form {
-    max-width: 400px;
-    margin: auto;
-  }
-  
-  .add-user-form form {
-    display: grid;
-    gap: 1rem;
-  }
-  
-  .add-user-form label {
-    font-weight: bold;
-  }
-  
-  .add-user-form input,
-  .add-user-form select {
-    width: 100%;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-  }
-  
-  .add-user-form button {
-    background-color: #007bff;
-    color: #fff;
-    padding: 0.5rem 1rem;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .add-user-form button:hover {
-    background-color: #0056b3;
-  }
-  
+.instance-table {
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+h2 {
+  color: blue;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}

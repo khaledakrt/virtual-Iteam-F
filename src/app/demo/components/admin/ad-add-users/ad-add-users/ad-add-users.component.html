@@ -1,34 +1,23 @@
-<!-- ad-add-users.component.html -->
-<div class="add-user-form">
-  <h1>Ajouter un nouvel utilisateur</h1>
-  <form (submit)="registerUser()">
-    <div>
-      <label for="nom">Nom :</label>
-      <input type="text" id="nom" name="nom" [(ngModel)]="nom" required>
-    </div>
-    <div>
-      <label for="prenom">Prénom :</label>
-      <input type="text" id="prenom" name="prenom" [(ngModel)]="prenom" required>
-    </div>
-    <div>
-      <label for="email">Email :</label>
-      <input type="email" id="email" name="email" [(ngModel)]="email" required>
-    </div>
-    <div>
-      <label for="password">Mot de passe :</label>
-      <input type="password" id="password" name="password" [(ngModel)]="password" required>
-    </div>
-    <div>
-      <label for="role">Rôle :</label>
-      <select id="role" name="role" [(ngModel)]="role" required>
-        <option value="student">Student</option>
-        <option value="teacher">Teacher</option>
-      </select>
-    </div>
-    <div>
-      <label for="photo">Photo :</label>
-      <input type="text" id="photo" name="photo" [(ngModel)]="photo">
-    </div>
-    <button type="submit">Enregistrer</button>
-  </form>
-</div>
+<h2>Instance Information</h2>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Private IP Addresses</th>
+      <th>Floating IP Addresses</th>
+      <th>Status</th>
+      <th>Server Group</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let instance of instances">
+      <td>{{ instance.id }}</td>
+      <td>{{ instance.name }}</td>
+      <td>{{ instance.private_ips.join(', ') }}</td>
+      <td>{{ instance.floating_ips.join(', ') }}</td>
+      <td>{{ instance.status }}</td>
+      <td>{{ instance.server_group }}</td>
+    </tr>
+  </tbody>
+</table>
