@@ -5,4 +5,14 @@
   .shutdown-status {
     color: red; /* Change text color to red for shutdown status */
   }
+  .button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px; /* Ajoute un espace en bas des boutons */
+  }
+  
+  .button-group button {
+    flex: 5; /* Les boutons s'étendent pour remplir l'espace disponible */
+    margin-right: 20px; /* Ajoute un espacement entre les boutons */
+  }
   

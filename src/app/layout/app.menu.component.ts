@@ -85,6 +85,7 @@ export class AppMenuComponent implements OnInit {
                     { label: 'my Virtual', icon: 'pi pi-fw pi-id-card', routerLink: ['/admin/vm-list'] },
                     { label: 'teachers', icon: 'pi pi-fw pi-check-square', routerLink: ['/admin/teacher-list/'] },
                     { label: 'students', icon: 'pi pi-fw pi-check-square', routerLink: ['/admin/student-list'] },
+                    { label: 'Requests', icon: 'pi pi-fw pi-id-card', routerLink: ['/admin/request-list'] },
                     { label: 'créer nouveau user', icon: 'pi pi-fw pi-check-square', routerLink: ['/admin/users-create'] },
                     { label: 'Logout', icon: 'pi pi-fw pi-id-card', command: () => this.logout() }
                 ]

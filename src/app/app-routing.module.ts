@@ -26,6 +26,7 @@ import { AdminDashboardComponent } from './demo/components/admin/admin-dashboard
                 { path: 'teacher-list', loadChildren: () => import('./demo/components/admin/ad-teachers/ad-teachers.module').then(m => m.AdTeachersModule) },
                 { path: 'student-list', loadChildren: () => import('./demo/components/admin/ad-students/ad-students.module').then(m => m.AdStudentsModule) },
                 { path: 'vm-list', loadChildren: () => import('./demo/components/admin/ad-vms/ad-vms.module').then(m => m.AdVmsModule) },
+                { path: 'request-list', loadChildren: () => import('./demo/components/admin/ad-requests/ad-requests.module').then(m => m.AdRequestsModule) },
                 { path: 'users-list', loadChildren: () => import('./demo/components/admin/ad-vms/ad-vms.module').then(m => m.AdVmsModule) },
                 { path: 'users-create', loadChildren: () => import('./demo/components/admin/ad-add-users/ad-add-users.module').then(m => m.AdAddUsersModule) },
 

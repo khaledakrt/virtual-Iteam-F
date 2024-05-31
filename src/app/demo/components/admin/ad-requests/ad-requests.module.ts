@@ -1,9 +1,11 @@
+// ad-add-users.module.ts
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { MyRequestsRoutingModule } from './my-requests-routing.module';
-import { MyRequestsComponent } from './my-requests/my-requests.component';
+import { AdRequestsRoutingModule } from './ad-requests-routing.module';
+import { AdRequestsComponent } from './ad-requests/ad-requests.component';
+import { RequestService } from 'src/app/demo/service/request.service';
 import { TableModule } from 'primeng/table';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ButtonModule } from 'primeng/button';
@@ -17,14 +19,11 @@ import { DropdownModule } from 'primeng/dropdown';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
-
 @NgModule({
-  declarations: [
-    MyRequestsComponent
-  ],
-  imports: [
-    CommonModule,
-    MyRequestsRoutingModule,
+  declarations: [AdRequestsComponent],
+  imports: [CommonModule, 
+    FormsModule, 
+    AdRequestsRoutingModule,
     CommonModule,
     TableModule,
     FileUploadModule,
@@ -40,6 +39,7 @@ import { DialogModule } from 'primeng/dialog';
     RadioButtonModule,
     InputNumberModule,
     DialogModule
-  ]
+  ],
+  providers: [RequestService]
 })
-export class MyRequestsModule { }
+export class AdRequestsModule {}
