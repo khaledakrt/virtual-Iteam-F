@@ -1,0 +1,314 @@
+<div class="surface-0 flex justify-content-center">
+    <div id="home" class="landing-wrapper overflow-hidden">
+        <div class="navbar-container fixed top-0 left-0 w-full py-1 px-5 md:px-6 lg:px-8 flex items-center justify-between z-10"
+        [ngClass]="{'bg-transparent': !isNavbarGray, 'bg-gray-200': isNavbarGray}">          <a class="flex align-items-center" href="#">
+                <span class="text-900 font-medium text-2xl line-height-3 mr-8"></span>
+                
+                            </a>
+                            <a pRipple class="cursor-pointer block lg:hidden text-700" pStyleClass="@next" enterClass="hidden" leaveToClass="hidden"
+                            [hideOnOutsideClick]="true" (click)="toggleNavbarColor()">
+                             <i class="pi pi-bars text-4xl"></i>
+                         </a>
+                         
+            <div class="align-items-center surface-0 flex-grow-1 justify-content-between hidden lg:flex absolute lg:static w-full left-0 px-6 lg:px-0 z-2 items" style="top:48px"[ngClass]="{'bg-transparent': !isNavbarGray, 'bg-gray-200': isNavbarGray} ">
+                <ul class="list-none p-0 m-0 flex lg:align-items-center select-none flex-column lg:flex-row cursor-pointer   ">
+                    <li>
+                        <a onclick="location.href='#hero'" pRipple class="flex m-0 md:ml-5 px-0 py-3 text-900 font-medium line-height-3 text-xl text-blue-900" >
+                            <span>Accueil </span>
+                        </a>
+                        
+                        
+                    </li>
+                    <li>
+                        <a onclick="location.href='#highlights'" pRipple class="flex m-0 md:ml-5 px-0 py-3 text-900 font-medium line-height-3 text-xl text-blue-900">
+                            <span>À propos de nous</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a onclick="location.href='#features'" pRipple class="flex m-0 md:ml-5 px-0 py-3 text-900 font-medium line-height-3 text-xl text-blue-900">
+                            <span>Nos services </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a onclick="location.href='#projets'" pRipple class="flex m-0 md:ml-5 px-0 py-3 text-900 font-medium line-height-3 text-xl text-blue-900">
+                            <span>Nos projets </span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a onclick="location.href='#certif'" pRipple class="flex m-0 md:ml-5 px-0 py-3 text-900 font-medium line-height-3 text-xl text-blue-900">
+                            <span>Nos certificats  </span>
+                        </a>
+                    </li> 
+
+                    <li>
+                        <a  pRipple class="flex m-0 md:ml-5 px-0 py-3 text-900 font-medium line-height-3 text-xl text-blue-900">
+                            <button (click)="openAuthDialog()"> Se Connecter</button>
+                        </a>
+                    </li>
+ 
+                </ul>
+                <div class="flex justify-content-between lg:block border-top-1 lg:border-top-none surface-border py-3 lg:py-0 mt-3 lg:mt-0">
+                    <!-- <button pButton pRipple label="Login" class="p-button-text p-button-rounded border-none font-light line-height-2 text-blue-500"></button> -->
+                </div>
+            </div>
+        </div>
+        <div id="hero" class="flex flex-column pt-4 px-4 lg:px-8 overflow-hidden relative animate-fade-in-down"
+        style="background: url('../../../../../assets/demo/images/landing/Artboard 2-100 1 (1).png') 50% 100% / cover no-repeat; height: 100vh;">
+        <div  style="position: absolute; top: 40%; left: 4%; transform: translateY(-50%);">
+            <h1 class="text-gray-700 md:text-6xl lg:text-6xl " style="font-weight: bold; color: #333;">Bienvenue sur</h1> <br>
+            <h1 class="text-blue-900 md:text-8xl lg:text-9xl" style="font-weight: bold;">Virtual Iteam Platforme</h1>
+        </div>
+    </div>
+    
+    
+    <!-- Back to top button -->
+    <app-scroll-to-top></app-scroll-to-top>
+    
+
+    <div id="highlights" class="py-8 px-4 lg:px-8 mx-0 my-6 lg:mx-8">
+        <div class="text-center" >
+            <h2 class="text-900 font-bold mb-2 text-6xl "  [ngClass]="{'animate-fade-in-down': animationState['highlights'] === 'show'}">À propos de nous</h2>
+            <!-- <span class="text-600 text-2xl">Amet consectetur adipiscing elit...</span> -->
+        </div>
+
+        <div class="grid mt-8 pb-2 md:pb-8">
+            <div [ngClass]="{'animate-fade-in-right': animationState['highlights'] === 'show'}"class="flex justify-content-center col-12 lg:col-6 p-0 flex-order-1 lg:flex-order-0" style="border-radius:8px;">
+                <img   src="../../../../../assets/demo/images/landing/vb 1 (1).png" class="w-11 lg:h-5/6" alt="mockup mobile">
+            </div>
+
+            <div class="col-12 lg:col-6 my-auto flex flex-column lg:items-start text-left lg:text-left line-height-5">
+
+            
+                <div class="ml-0 md:ml-2 ">
+                    
+                    <h2 class="line-height-1 text-900 text-4xl lg:text-3xl font-normal text-start pt-6">Notre vision</h2>
+                    <span class="text-700 text-xl lg:text-1xl line-height-3" style="max-width: 650px;">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old</span>
+                </div>
+            
+                <div class="ml-0 md:ml-2">
+                    <h2 class="line-height-1 text-900 text-4xl lg:text-3xl  font-normal pt-6">Objectifs stratégiques</h2>
+                    <span class="text-700 text-xl line-height-3" style="max-width: 650px;">Notre mission est de répondre efficacement aux besoins et aux attentes actuels et futurs des partenaires de notre bureau d'études, de recherche et développement, dans le domaine de conception et le développement de dispositifs médicaux.</span>
+                </div>
+            
+                <div class="ml-0 md:ml-2">
+                    <h2 class="line-height-1 text-900 text-4xl lg:text-3xl  font-normal pt-6">Notre mission</h2>
+                    <span class="text-700 text-xl line-height-3" style="max-width: 650px;">
+                        <li>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</li>
+                        <li> make a type specimen book. It has survived not only five centuries, </li>
+                        <li>It is a long established fact that a reader will be distracted by the readable content of</li>
+                        <li> Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</li>
+                    </span>
+                </div>
+            </div>
+            
+            
+
+        </div>
+        
+
+
+    </div>
+
+
+
+
+
+    
+    <div id="features" #featuresSection  class="py-8 px-4 lg:px-8 mt-5 mb-8 mx-0 "  style="background-color: #f6f6f6;" [ngClass]="{'animate-fade-in-down': animationState['features'] === 'show'}" >
+        <div  class="grid justify-content-center lg:mx-8" >
+            <div id="s2"  class="col-12 text-center mt-2 mb-4">
+                <h2 class="text-900 font-bold mb-4 text-6xl">Nos services</h2>
+                <!-- <span class="text-600 text-2xl">Placerat in egestas erat...</span> -->
+            </div>
+
+            <div class="col-12 md:col-12 lg:col-4 p-0 lg:pr-5 lg:pb-5 mt-4 lg:mt-0">
+                <div style="height:160px; padding:2px; border-radius:10px; background: linear-gradient(90deg, rgba(253, 228, 165, 0.2),rgba(187, 199, 205, 0.2)), linear-gradient(180deg, rgba(253, 228, 165, 0.2),rgba(187, 199, 205, 0.2));">
+                    <div class="p-3 surface-card h-full" style="border-radius:8px;">
+                        <div class="flex align-items-center justify-content-center bg-yellow-200 mb-3" style="width:3.5rem;height:3.5rem; border-radius:10px;">
+                            <i class="pi pi-fw pi-mobile text-2xl text-yellow-700"></i>
+                        </div>
+                        <h5 class="mb-2 text-900">Développement mobile </h5>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="col-12 md:col-12 lg:col-4 p-0 lg:pr-5 lg:pb-5 mt-4 lg:mt-0">
+                <div style="height:160px; padding:2px; border-radius:10px; background: linear-gradient(90deg, rgba(145,226,237,0.2),rgba(251, 199, 145, 0.2)), linear-gradient(180deg, rgba(253, 228, 165, 0.2), rgba(172, 180, 223, 0.2));">
+                    <div class="p-3 surface-card h-full" style="border-radius:8px;">
+                        <div class="flex align-items-center justify-content-center bg-cyan-200 mb-3" style="width:3.5rem;height:3.5rem; border-radius:10px;">
+                            <i class="pi pi-fw pi-desktop text-2xl text-cyan-700"></i>
+                        </div>
+                        <h5 class="mb-2 text-900">Développement web</h5>
+                    </div>
+                </div>
+            </div>
+    
+
+    
+    
+            <div class="col-12 md:col-12 lg:col-4 p-0 lg:pb-5 mt-4 lg:mt-0">
+                <div style="height:160px; padding:2px; border-radius:10px; background: linear-gradient(90deg, rgba(251, 199, 145, 0.2), rgba(246, 158, 188, 0.2)), linear-gradient(180deg, rgba(172, 180, 223, 0.2), rgba(212, 162, 221, 0.2));">
+                    <div class="p-3 surface-card h-full" style="border-radius:8px;">
+                        <div class="flex align-items-center justify-content-center bg-pink-200 mb-3" style="width:3.5rem;height:3.5rem; border-radius:10px;">
+                            <i class="pi pi-fw pi-check-square text-2xl text-pink-700"></i>
+                        </div>
+                        <h5 class="mb-2 text-900">Management </h5>
+                    </div>
+                </div>
+            </div>
+    
+
+
+        </div>
+    </div>
+
+
+
+    
+
+
+
+   
+
+
+<section  aria-labelledby="contact-heading" class="mt-16 py-6 px-4 lg:px-8 md:mt-16 mx-0 lg:mx-8" >
+    <div class="text-center" >
+        <h2 class="text-900 font-bold mb-2 text-6xl" >Coordonnées</h2>
+        <!-- <span class="text-600 text-2xl">Amet consectetur adipiscing elit...</span> -->
+    </div>
+    <div role="region" aria-labelledby="features" class="flex flex-col lg:flex-row justify-between mt-8 mb-8 p-2 md:p-8" style="border-radius: 20px; background: linear-gradient(0deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), radial-gradient(77.36% 256.97% at 77.36% 57.52%, #EFE1AF 0%, #C3DCFA 100%);">
+ 
+       <!-- Location Information -->
+       <address class="flex flex-col items-center mb-4 lg:mb-0 lg:mr-1">
+          <i class="pi pi-map-marker pi-lg text-4xl mb-2" aria-label="Location"></i>
+          <h5>Venez nous rencontrer</h5>
+          <span>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old</span>
+       </address>
+ 
+       <!-- Phone Contact -->
+       <div class="flex flex-col items-center mb-4 lg:mb-0 lg:mr-3">
+          <i class="pi pi-phone fa-2x mb-2 text-4xl" aria-label="Phone"></i>
+          <h5>Appelez-nous</h5>
+          <span>+216 xxxxxxxxx</span>
+       </div>
+ 
+       <!-- Email Contact -->
+       <div class="flex flex-col items-center mb-4 lg:mb-0 lg:mr-3">
+          <i class="pi pi-envelope fa-2x mb-2 text-4xl" aria-label="Email"></i>
+          <h5>Envoie-nous un mail</h5>
+          <span>contact@elarningk.fr</span>
+       </div>
+ 
+       <!-- Social Media Links -->
+       <div class="flex flex-col items-center lg:mr-3">
+          <i class="pi pi-heart fa-2x mb-2 text-4xl" aria-label="Follow Us"></i>
+          <h5>Suivez Nous herozently</h5>
+          <div class="flex mt-4 space-x-6 sm:justify-center sm:mt-0">
+             <a href="#" aria-label="Facebook" class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
+                <!-- ... -->
+             </a>
+             <a href="#" aria-label="Twitter" class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
+                <!-- ... -->
+             </a>
+             <a href="#" aria-label="Instagram" class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
+                <!-- ... -->
+             </a>
+          </div>
+       </div>
+    </div>
+ </section>
+ 
+
+
+ 
+
+    
+
+
+
+
+
+ <section id="contact" class="bg-blue relative bg-white:bg-gray-900 flex z-0" id="contact" aria-labelledby="contact-heading">
+    <div class="flex-none w-2/5 relative image-container">
+            <div class="absolute flex items-center justify-center w-full h-full">
+                <img src="../../../../../assets/demo/images/landing/contact.png" alt="" class="max-w-full max-h-full contact-image">
+            </div>
+        </div>
+        <div class="flex-auto py-8 lg:py-16 px-4 mx-auto max-w-screen-md relative z-10">
+            <h2 id="contact-heading" class="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-300 dark:text-white">Contactez-nous</h2>
+            <p class="mb-8 lg:mb-16 font-light text-center text-gray-500 dark:text-gray-400 sm:text-xl">Souhaitez-vous nous faire part de vos commentaires ? Avez-vous besoin de détails sur notr virtual-Iteam platforme ? Faites-le nous savoir.</p>
+            <form [formGroup]="emailForm" (ngSubmit)="sendEmail()">
+                <div>
+                    <label for="email" class="block mb-2 text-sm font-medium text-gray-500 dark:text-gray-300">Votre adresse e-mail</label>
+                    <input type="email" id="email" formControlName="email"  name="email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="nom@medin.com" required>
+                </div>
+                <div>
+                    <label for="subject" class="block mb-2 text-sm font-medium text-gray-500 dark:text-gray-400">Sujet</label>
+
+                    <input type="text" id="subject" formControlName="subject"  name="subject" class="block p-3 w-full text-sm text-gray-500 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="Dites-nous comment nous pouvons vous aider" required>
+                  </div>
+                  <div class="sm:col-span-2"> 
+                    <label for="message" class="block mb-2 text-sm font-medium text-gray-500 dark:text-gray-400">Votre message</label>
+                    <textarea id="message" rows="6"  formControlName="message"  name="message" class="block p-2.5 w-full text-sm text-gray-500 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"></textarea>
+                  </div>
+                <button type="submit" class="my-2 py-3 px-5 text-sm font-medium text-center text-white rounded-lg bg-primary-700 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Envoyer le message</button>
+            </form>
+        </div>
+    </section>
+    
+    
+
+
+
+    <footer class="p-1 bg-slate-800 md:p-8 lg:p-4 dark:bg-slate-800">
+        <div class="mx-auto max-w-screen-xl text-center">
+            <a href="#" class="flex justify-center items-center text-2xl font-semibold text-gray-900 dark:text-white my-2">
+                    
+            </a>
+            <p class="my-4 text-gray-300 dark:text-gray-400">virtual-Iteam Platforme</p>
+            <ul class="flex flex-wrap justify-center items-center mb-6 text-gray-900 dark:text-white">
+                <li>
+                    <a href="#" class="mr-4 hover:underline md:mr-6 text-gray-400">À propos de nous</a>
+                </li>
+                <li>
+                    <a href="#" class="mr-4 hover:underline md:mr-6 text-gray-400" >Nos services</a>
+                </li>
+                <li>
+                    <a href="#" class="mr-4 hover:underline md:mr-6 text-gray-400">Nos projets</a>
+                </li>
+                <!-- <li>
+                    <a href="#" class="mr-4 hover:underline md:mr-6 text-gray-400">Blog</a>
+                </li> -->
+                <!-- <li>
+                    <a href="#" class="mr-4 hover:underline md:mr-6 text-gray-400">Affiliate Program</a>
+                </li> -->
+
+                <li>
+                    <a href="#" class="mr-4 hover:underline md:mr-6 text-gray-400">Contact</a>
+                </li>
+            </ul>
+            <hr class="my-2 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-4" />
+            <div class="sm:flex sm:items-center sm:justify-between" style="padding-bottom: 0px;">
+                <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2024 <a href="" class="hover:underline text-gray-400">virtual-Iteam</a>. All Rights Reserved.
+                </span>
+                <div class="flex mt-4 space-x-6 sm:justify-center sm:mt-0">
+                    <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg>
+                    </a>
+                    <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" /></svg>
+                    </a>
+                    <a href="https://www.linkedin.com/company/virtual-Iteam/" class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>                  </a>
+
+
+                </div>
+            </div>
+        </div>
+      </footer>
+    
+    </div>
+</div>
+

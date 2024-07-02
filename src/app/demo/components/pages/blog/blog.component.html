@@ -1,0 +1,42 @@
+<!-- blog.component.html -->
+<div class="field">
+  <h3 class="block text-500 font-medium mb-3">Create your Blog</h3>
+  <quill-editor class="ml-36" [(ngModel)]="blogMember.content"></quill-editor>
+  </div>
+  
+
+  
+
+<div class="grid ">
+  <div class="col-12">
+      <div class="card">
+        <span class="block text-500 font-medium mb-3">your Blog View</span>
+
+
+
+
+ 
+
+        <div [innerHTML]="blogMember.content"></div>
+        <br>
+        <hr>
+          <span class="block text-500 font-medium mb-3">upload cover image</span>
+
+          <p-fileUpload name="demo[]" url="./upload.php" (onUpload)="onUpload($event)"
+                        [multiple]="true" accept="image/*" [maxFileSize]="1000000">
+              <ng-template pTemplate="content">
+                  <ul *ngIf="uploadedFiles.length">
+                      <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                  </ul>
+              </ng-template>
+          </p-fileUpload>
+
+          <div class="relative left-3/4 mt-3">
+            <p-button class="mt-10" (click)="onSave()">Save</p-button>
+          </div>
+          
+
+      </div>
+  </div>
+</div>
+  

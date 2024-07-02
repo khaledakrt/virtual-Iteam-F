@@ -1,0 +1,98 @@
+<!-- ad-groups.component.html -->
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" [baseZIndex]="10000"></p-confirmDialog>
+
+<p-toast></p-toast>
+<div class="grid">
+  <div class="col-12">
+    <div class="card px-6 py-6">
+      <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+          <div class="my-2">
+            <button pButton pRipple label="New Group" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNewGroup()"></button>
+            <button pButton pRipple label="Delete Group" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedGroups()" [disabled]="!selectedGroups || !selectedGroups.length"></button>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="right"></ng-template>
+      </p-toolbar>
+
+      <p-table [value]="groups" [columns]="cols" responsiveLayout="scroll" [globalFilterFields]="['teacher_id','level','specialty','number']" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedGroups" selectionMode="multiple" [rowHover]="true" dataKey="_id">
+        <ng-template pTemplate="caption">
+          <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+            <h5 class="m-0">Manage Groups</h5>
+            <span class="block mt-2 md:mt-0 p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (input)="onGlobalFilter($event)" placeholder="Search..." class="w-full sm:w-auto" />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 3rem">
+              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th pSortableColumn="_id">Group ID <p-sortIcon field="_id"></p-sortIcon></th>
+            <th pSortableColumn="level">Level <p-sortIcon field="level"></p-sortIcon></th>
+            <th pSortableColumn="specialty">Specialty <p-sortIcon field="specialty"></p-sortIcon></th>
+            <th pSortableColumn="number">Number <p-sortIcon field="number"></p-sortIcon></th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-group>
+          <tr>
+            <td>
+              <p-tableCheckbox [value]="group"></p-tableCheckbox>
+            </td>
+            <td style="width: 20%;">
+              <span class="p-column-title">Group ID</span>
+              {{group._id}}
+            </td>
+            <td style="width: 20%;">
+              <span class="p-column-title">Level</span>
+              {{group.level}}
+            </td>
+            <td style="width: 20%;">
+              <span class="p-column-title">Specialty</span>
+              {{group.specialty}}
+            </td>
+            <td style="width: 20%;">
+              <span class="p-column-title">Number</span>
+              {{group.number}}
+            </td>
+            <td>
+              <div class="flex">
+                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editGroup(group)"></button>
+                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteGroup(group)"></button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<p-dialog [(visible)]="groupDialog" [style]="{width: '450px'}" header="Group Details" [modal]="true" class="p-fluid">
+  <ng-template pTemplate="content">
+    <div class="form-group">
+      <label for="teacher_id">Teacher ID</label>
+      <input type="text" class="form-control" id="teacher_id" name="teacher_id" [(ngModel)]="group.teacher_id" required>
+    </div>
+    <div class="form-group">
+      <label for="level">Level</label>
+      <input type="text" class="form-control" id="level" name="level" [(ngModel)]="group.level" required>
+    </div>
+    <div class="form-group">
+      <label for="specialty">Specialty</label>
+      <input type="text" class="form-control" id="specialty" name="specialty" [(ngModel)]="group.specialty" required>
+    </div>
+    <div class="form-group">
+      <label for="number">Number</label>
+      <input type="text" class="form-control" id="number" name="number" [(ngModel)]="group.number" required>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveGroup()"></button>
+  </ng-template>
+</p-dialog>

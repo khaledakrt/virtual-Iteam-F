@@ -1,0 +1,143 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card px-6 py-6">
+      <p-toast></p-toast>
+      <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+          <div class="my-2">
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+            <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedTeachers()" [disabled]="!selectedTeachers || !selectedTeachers.length"></button>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="right"></ng-template>
+      </p-toolbar>
+
+      <p-table [value]="teachers" [columns]="cols" responsiveLayout="scroll" [globalFilterFields]="['nom','prenom','email','specialite']" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedTeachers" selectionMode="multiple" [rowHover]="true" dataKey="_id">
+        <ng-template pTemplate="caption">
+          <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+            <h5 class="m-0">Manage Teachers</h5>
+            <span class="block mt-2 md:mt-0 p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (input)="onGlobalFilter($event)" placeholder="Search..." class="w-full sm:w-auto" />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 3rem">
+              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th pSortableColumn="nom">First Name <p-sortIcon field="nom"></p-sortIcon></th>
+            <th pSortableColumn="prenom">Last Name <p-sortIcon field="prenom"></p-sortIcon></th>
+            <th pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon></th>
+            <!-- <th pSortableColumn="specialite">Specialty <p-sortIcon field="specialite"></p-sortIcon></th> -->
+            <th pSortableColumn="classes">Classes <p-sortIcon field="classes"></p-sortIcon></th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-teacher>
+          <tr>
+            <td>
+              <p-tableCheckbox [value]="teacher"></p-tableCheckbox>
+            </td>
+            <td style="width: 20%;">
+              <span class="p-column-title">First Name</span>
+              {{teacher.nom}}
+            </td>
+            <td style="width: 20%;">
+              <span class="p-column-title">Last Name</span>
+              {{teacher.prenom}}
+            </td>
+            <td style="width: 20%;">
+              <span class="p-column-title">Email</span>
+              {{teacher.email}}
+            </td>
+            <td style="width: 20%;">
+              <span class="p-column-title">Specialty</span>
+              {{teacher.specialite}}
+            </td>
+            <td style="width: 20%;">
+              <span class="p-column-title">Classes</span>
+              {{teacher.classes}}
+            </td>
+            <td>
+              <div class="flex">
+                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editTeacher(teacher)"></button>
+                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteTeacher(teacher)"></button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<p-dialog [(visible)]="teacherDialog" [style]="{width: '450px'}" header="Teacher Details" [modal]="true" class="p-fluid">
+  <ng-template pTemplate="content">
+    <div class="p-field">
+      <label for="nom">First Name</label>
+      <input id="nom" type="text" [(ngModel)]="teacher.nom" pInputText required>
+    </div>
+    <div class="p-field">
+      <label for="prenom">Last Name</label>
+      <input id="prenom" type="text" [(ngModel)]="teacher.prenom" pInputText required>
+    </div>
+    <div class="p-field">
+      <label for="email">Email</label>
+      <input id="email" type="email" [(ngModel)]="teacher.email" pInputText required>
+    </div>
+    <div class="p-field">
+      <label for="password">Password</label>
+      <input id="password" type="password" [(ngModel)]="teacher.password" pInputText required>
+    </div>
+    <!-- <div class="p-field">
+      <label for="role">Role</label>
+      <input id="role" type="text" [(ngModel)]="teacher.role" pInputText required>
+    </div>
+    <div class="p-field">
+      <label for="specialite">Specialty</label>
+      <input id="specialite" type="text" [(ngModel)]="teacher.specialite" pInputText required>
+    </div> -->
+    <div class="p-field">
+      <label for="groups">Groups:</label>
+      <div *ngFor="let group of groups">
+        <input type="checkbox" id="{{group._id}}" name="groups" [checked]="isGroupSelected(group._id)" (change)="handleGroupChange($event, group._id)">
+        <label for="{{group._id}}">{{group.level}} {{group.specialty}} {{group.number}}</label>
+      </div>
+    </div>
+    
+    <div>
+      <h3>Selected Classes:</h3>
+      <ul>
+        <li *ngFor="let classKey of selectedClasses">{{ classKey }}</li>
+      </ul>
+    </div>
+    <!-- <div class="p-field">
+      <label for="vms">VMS</label>
+      <input id="vms" type="text" [(ngModel)]="teacher.vms" pInputText required>
+    </div> -->
+    <div class="p-field">
+      <label for="photo">Photo</label>
+      <input type="file" id="photo" (change)="handlePhotoChange($event)">
+    </div>
+  </ng-template>
+  
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveTeacher()"></button>
+  </ng-template>
+</p-dialog>
+
+<!-- Delete Teachers Dialog -->
+<p-dialog [(visible)]="deleteTeachersDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+  <div class="flex align-items-center justify-content-center">
+    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+    <span>Are you sure you want to delete selected teachers?</span>
+  </div>
+  <ng-template pTemplate="footer">
+    <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteTeachersDialog = false"></button>
+    <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSelected()"></button>
+  </ng-template>
+</p-dialog>

@@ -1,0 +1,20 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card profile-card">
+      <h2>Student Profile</h2>
+      <div class="profile-container">
+        <div class="profile-container">
+          <div class="photo-placeholder">
+            <!-- Use the correct method name -->
+            <img src="{{ getStudentPhotoUrl(studentData?.photo) }}" alt="Student Photo">
+          </div>
+          <div class="student-details">
+          <div><strong>Nam:</strong> {{ studentData?.nom }}</div>
+          <div><strong>Prénom:</strong> {{ studentData?.prenom }}</div>
+          <div><strong>Email:</strong> {{ studentData?.email }}</div>
+          <div><strong>Classe:</strong> {{ studentData?.classe }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

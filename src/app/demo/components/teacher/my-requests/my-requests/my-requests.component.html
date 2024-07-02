@@ -1,0 +1,106 @@
+<div class="my-requests-container">
+  <p-toast></p-toast>
+  <p-toolbar class="mb-4">
+    <ng-template pTemplate="left">
+      <div class="button-group">
+        <button pButton label="Formuler Request" (click)="view = 'formulerRequest'" [disabled]="view === 'formulerRequest'"></button>
+        <button pButton label="Etat de Request" (click)="view = 'etatRequest'" [disabled]="view === 'etatRequest'"></button>
+      </div>
+    </ng-template>
+  </p-toolbar>
+
+  <!-- Formuler Request View -->
+  <ng-container *ngIf="view === 'formulerRequest'">
+    <div class="card px-6 py-6">
+      <!-- <div><strong>Classes:</strong></div> -->
+      <!-- <div>
+        <label for="classSelect">Select Class:</label>
+        <select id="classSelect" [(ngModel)]="formData.groupe" name="groupe">
+          <option *ngFor="let class of classes" [value]="class">{{ class }}</option>
+        </select>
+      </div> -->
+      
+      <h2>Formuler une Nouvelle Demande</h2>
+      <form (ngSubmit)="submitForm()" class="form">
+        <!-- Remove the input field for Groupe -->
+        <!-- Add the select list for Groupe -->
+        <!-- <div class="form-group">
+          <label for="groupe">Groupe</label>
+          
+          <p-dropdown id="groupe" [(ngModel)]="formData.groupe" name="groupe" [options]="classOptions" placeholder="Select a groupe" required></p-dropdown>
+        </div> -->
+
+        <div style="border: 0px solid #ccc; padding: 3px; width: 200px;">
+          <label for="classSelect" style="margin-bottom: 3px; font-weight: bold;">Select Classe:</label>
+          <select id="classSelect" [(ngModel)]="formData.groupe" name="groupe" style="width: 100%; padding: 5px; border-width: 1px;">
+            <option value="" disabled selected>Please select a class</option>
+            <option *ngFor="let class of classes" [value]="class">{{ class }}</option>
+          </select>
+        </div>
+        
+        
+        
+        
+        
+        
+        <div class="form-group" style="border: 0px solid #ccc; padding: 3px; width: 200px;">
+          <label for="nombreLabs" style="margin-bottom: 3px;">Nombre de Labs</label>
+          <input pInputText id="nombreLabs" [(ngModel)]="formData.nombreLabs" name="nombreLabs" style="width: 100%; padding: 5px; border-width: 1px;" required />
+        </div>
+        
+        <div class="form-group">
+          <label for="systemExploitation">Système d'Exploitation</label>
+          <p-dropdown id="systemExploitation" [(ngModel)]="formData.systemExploitation" name="systemExploitation" [options]="systemExploitationOptions" placeholder="Sélectionner un système" required></p-dropdown>
+        </div>
+        <div class="form-group">
+          <label for="baseDonnee">Base de Données</label>
+          <p-dropdown id="baseDonnee" [(ngModel)]="formData.baseDonnee" name="baseDonnee" [options]="baseDonneeOptions" placeholder="Sélectionner une base de données" required></p-dropdown>
+        </div>
+        <div class="form-group">
+          <label for="runTimeEnvironnement">Environnement d'Exécution</label>
+          <p-dropdown id="runTimeEnvironnement" [(ngModel)]="formData.runTimeEnvironnement" name="runTimeEnvironnement" [options]="runTimeEnvironnementOptions" placeholder="Sélectionner un environnement" required></p-dropdown>
+        </div>
+        <div class="form-group">
+          <label for="webServer">Serveur Web</label>
+          <p-dropdown id="webServer" [(ngModel)]="formData.webServer" name="webServer" [options]="webServerOptions" placeholder="Sélectionner un serveur web" required></p-dropdown>
+        </div>
+        <button pButton type="submit" label="Envoyer"></button>
+      </form>
+    </div>
+  </ng-container>
+
+  <!-- Etat de Request View -->
+  <ng-container *ngIf="view === 'etatRequest'">
+    <div class="card px-6 py-6">
+      <h5>Etat des Demandes</h5>
+      <p-table [value]="requests" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedRequests"
+        selectionMode="multiple" [rowHover]="true" dataKey="id">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Name</th>
+            <th>Groupe</th>
+            <th>Nombre de Labs</th>
+            <th>Système d'Exploitation</th>
+            <th>Base de Données</th>
+            <th>Environnement d'Exécution</th>
+            <th>Serveur Web</th>
+            <th>Status</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-request>
+          <tr>
+            <td>{{ requests.senderName }}</td>
+            <td>{{ requests.groupe }}</td>
+            <td>{{ requests.nombreLabs }}</td>
+            <td>{{ requests.systemExploitation }}</td>
+            <td>{{ requests.baseDonnee }}</td>
+            <td>{{ requests.runTimeEnvironnement }}</td>
+            <td>{{ requests.webServer }}</td>
+            <td>{{ requests.status }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </ng-container>
+</div>

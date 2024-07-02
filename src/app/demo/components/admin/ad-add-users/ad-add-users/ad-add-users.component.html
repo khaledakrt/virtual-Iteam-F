@@ -1,0 +1,23 @@
+<h2>Instance Information</h2>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Private IP Addresses</th>
+      <th>Floating IP Addresses</th>
+      <th>Status</th>
+      <th>Server Group</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let instance of instances">
+      <td>{{ instance.id }}</td>
+      <td>{{ instance.name }}</td>
+      <td>{{ instance.private_ips.join(', ') }}</td>
+      <td>{{ instance.floating_ips.join(', ') }}</td>
+      <td>{{ instance.status }}</td>
+      <td>{{ instance.server_group }}</td>
+    </tr>
+  </tbody>
+</table>

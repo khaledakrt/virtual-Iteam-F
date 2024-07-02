@@ -1,0 +1,128 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card px-6 py-6">
+      <p-toast></p-toast>
+      <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+          <div class="my-2">
+            <button pButton pRipple label="Validate" icon="pi pi-check" class="p-button-success mr-2" (click)="validateRequest()"></button>
+            <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedRequests()" [disabled]="!selectedRequests || !selectedRequests.length"></button>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="right"></ng-template>
+      </p-toolbar>
+
+      <p-table [value]="requests" [responsive]="true" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedRequests" selectionMode="multiple" [rowHover]="true" dataKey="_id">
+        <ng-template pTemplate="caption">
+          <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+            <h5 class="m-0">Liste des Demandes</h5>
+            <span class="block mt-2 md:mt-0 p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (input)="onGlobalFilter($event)" placeholder="Search..." class="w-full sm:w-auto" />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 3rem">
+              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th pSortableColumn="senderName">Nom <p-sortIcon field="senderName"></p-sortIcon></th>
+            <th pSortableColumn="groupe">Groupe <p-sortIcon field="groupe"></p-sortIcon></th>
+            <th pSortableColumn="nombreLabs">Nombre de Labs <p-sortIcon field="nombreLabs"></p-sortIcon></th>
+            <th pSortableColumn="systemExploitation">Système d'Exploitation <p-sortIcon field="systemExploitation"></p-sortIcon></th>
+            <th pSortableColumn="baseDonnee">Base de Données <p-sortIcon field="baseDonnee"></p-sortIcon></th>
+            <th pSortableColumn="runTimeEnvironnement">Environnement d'Exécution <p-sortIcon field="runTimeEnvironnement"></p-sortIcon></th>
+            <th pSortableColumn="webServer">Serveur Web <p-sortIcon field="webServer"></p-sortIcon></th>
+            <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon></th>
+            <th></th> <!-- Additional column header for validate button -->
+          </tr>
+        </ng-template>
+       <!-- Updated p-table template with modification button -->
+<ng-template pTemplate="body" let-request>
+  <tr>
+    <td>
+      <p-tableCheckbox [value]="request"></p-tableCheckbox>
+    </td>
+    <td>{{ request.senderName }}</td>
+    <td>{{ request.groupe }}</td>
+    <td>{{ request.nombreLabs }}</td>
+    <td>{{ request.systemExploitation }}</td>
+    <td>{{ request.baseDonnee }}</td>
+    <td>{{ request.runTimeEnvironnement }}</td>
+    <td>{{ request.webServer }}</td>
+    <td>{{ request.status }}</td>
+    <td>
+      <div class="flex">
+        <button *ngIf="request.status !== 'Validated'" pButton pRipple icon="pi pi-check" class="p-button-rounded p-button-success mr-2" (click)="validateRequest(request)"></button>
+        <button *ngIf="request.status === 'Validated'" pButton pRipple icon="pi pi-check" class="p-button-rounded p-button-success mr-2" disabled></button>
+        <!-- Modification button opening new window -->
+        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editRequest(request)"></button>
+     
+      </div>
+    </td>
+  </tr>
+</ng-template>
+
+
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<p-dialog [(visible)]="requestDialog" [style]="{width: '450px'}" header="Manage Request" [modal]="true" class="p-fluid">
+  <ng-template pTemplate="content">
+    <!-- Request details form goes here -->
+    <div class="form">
+      <div class="form-group">
+        <label for="senderName">Sender Name:</label>
+        <input type="text" id="senderName" [(ngModel)]="request.senderName" name="senderName" class="p-inputtext p-component" required>
+      </div>
+      <div class="form-group">
+        <label for="groupe">Groupe:</label>
+        <input type="text" id="groupe" [(ngModel)]="request.groupe" name="groupe" class="p-inputtext p-component" required>
+      </div>
+      <div class="form-group">
+        <label for="nombreLabs">Nombre de Labs:</label>
+        <input type="text" id="nombreLabs" [(ngModel)]="request.nombreLabs" name="nombreLabs" class="p-inputtext p-component" required>
+      </div>
+      <div class="form-group">
+        <label for="systemExploitation">Système d'Exploitation:</label>
+        <input type="text" id="systemExploitation" [(ngModel)]="request.systemExploitation" name="systemExploitation" class="p-inputtext p-component" required>
+      </div>
+      <div class="form-group">
+        <label for="baseDonnee">Base de Données:</label>
+        <input type="text" id="baseDonnee" [(ngModel)]="request.baseDonnee" name="baseDonnee" class="p-inputtext p-component" required>
+      </div>
+      <div class="form-group">
+        <label for="runTimeEnvironnement">Environnement d'Exécution:</label>
+        <input type="text" id="runTimeEnvironnement" [(ngModel)]="request.runTimeEnvironnement" name="runTimeEnvironnement" class="p-inputtext p-component" required>
+      </div>
+      <div class="form-group">
+        <label for="webServer">Serveur Web:</label>
+        <input type="text" id="webServer" [(ngModel)]="request.webServer" name="webServer" class="p-inputtext p-component" required>
+      </div>
+      <div class="form-group">
+        <label for="status">Status:</label>
+        <input type="text" id="status" [(ngModel)]="request.status" name="status" class="p-inputtext p-component" required>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveRequest()"></button>
+  </ng-template>
+</p-dialog>
+
+<!-- Delete requests Dialog -->
+<p-dialog [(visible)]="deleteRequestsDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+  <div class="flex align-items-center justify-content-center">
+    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+    <span>Are you sure you want to delete selected requests?</span>
+  </div>
+  <ng-template pTemplate="footer">
+    <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteRequestsDialog = false"></button>
+    <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSelected()"></button>
+  </ng-template>
+</p-dialog>

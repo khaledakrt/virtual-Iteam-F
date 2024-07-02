@@ -1,0 +1,45 @@
+<div class="auth-dialog bg-white rounded-lg p-8 max-w-md w-full">
+  <!-- Tab selection for login or register -->
+
+
+  <!-- Login or register forms -->
+  <div *ngIf="isLogin">
+    <!-- Login Form -->
+    <h2 class="text-2xl font-bold mb-4">Login</h2>
+        <!-- Toggle between student and teacher registration -->
+        <div class="flex justify-center mb-4">
+          <button class="mr-2 py-2 px-4 rounded hover:bg-gray-200 focus:outline-none" [class.bg-gray-200]="!isTeacher" (click)="toggleRole(false)">Student</button>
+          <button class="py-2 px-4 rounded hover:bg-gray-200 focus:outline-none" [class.bg-gray-200]="isTeacher" (click)="toggleRole(true)">Teacher</button>
+        </div>
+    <form [formGroup]="studentLoginForm" (ngSubmit)="studentLogin()"*ngIf="!isTeacher">
+      <!-- Email Field -->
+      <div class="mb-4">
+        <label for="studentLoginForm" class="block text-gray-700">Email</label>
+        <input type="email" id="loginEmail" formControlName="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+      </div>
+      <!-- Password Field -->
+      <div class="mb-4">
+        <label for="loginPassword" class="block text-gray-700">Password</label>
+        <input type="password" id="loginPassword" formControlName="password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+      </div>
+      <!-- Submit Button -->
+      <button type="submit" class="w-full bg-indigo-500 text-white font-bold py-2 px-4 rounded hover:bg-indigo-700 focus:outline-none focus:shadow-outline">Login</button>
+    </form>
+    <form [formGroup]="teacherLoginForm" (ngSubmit)="teacherLogin()"*ngIf="isTeacher">
+      <!-- Email Field -->
+      <div class="mb-4">
+        <label for="loginEmail" class="block text-gray-700">Email</label>
+        <input type="email" id="loginEmail" formControlName="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+      </div>
+      <!-- Password Field -->
+      <div class="mb-4">
+        <label for="loginPassword" class="block text-gray-700">Password</label>
+        <input type="password" id="loginPassword" formControlName="password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+      </div>
+      <!-- Submit Button -->
+      <button type="submit" class="w-full bg-indigo-500 text-white font-bold py-2 px-4 rounded hover:bg-indigo-700 focus:outline-none focus:shadow-outline" >Login</button>
+    </form>
+  </div>
+
+
+</div>
