@@ -50,7 +50,6 @@ export class AppMenuComponent implements OnInit {
             }
         ];
     }
-
     loadTeacherMenus() {
         this.model = [
             {

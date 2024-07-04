@@ -1,6 +1,6 @@
 // src/app/demo/service/teacher.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams  } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Teacher } from '../api/teacher';
 import { Group } from '../api/group'; // Import the Group interface
@@ -57,4 +57,19 @@ export class TeacherService {
     // Assuming you have an API endpoint to fetch the classes for the logged-in teacher
     return this.http.get<string[]>('http://localhost:3000/teacher/classes');
   }
+  
+  getTeachersByCriteria(role: string, classe: string, vms: string): Observable<any[]> {
+    const url = `${this.apiUrl}/teacher/teachers/group`; // L'URL doit être correctement formée ici
+    const params = { role, classe, vms };
+    return this.http.get<any[]>(url, { params });
+  }
+  getTeachersByStudentGroup(role: string, classe: string, vms: string): Observable<Teacher[]> {
+    const params = new HttpParams()
+      .set('role', role)
+      .set('classe', classe)
+      .set('vms', vms);
+    
+    return this.http.get<Teacher[]>(`${this.apiUrl}/teachers/group`, { params });
+  }
+
 }

@@ -25,6 +25,8 @@ export class StudentService {
   }
   getStudentPhotoUrl(photoFileName: string): string {
     return `http://localhost:3000/${photoFileName}`;
+
+    
   }
   addStudent(formData: FormData): Observable<Student> {
     const photoFileName = formData.get('photo') as string;
@@ -71,5 +73,21 @@ getStudentCountByClass(classe: string, role: string, vms: string): Observable<nu
     .set('role', role)
     .set('vms', vms);
   return this.http.get<number>(`${this.apiUrl}/count`, { params });
+}
+getStudentsByTeacherCriteria( classe: string, role: string, vms: string): Observable<Student[]> {
+  return this.http.get<Student[]>(`${this.apiUrl}/students/group`, {
+    params: {
+      
+      classe,
+      role,
+      vms
+    }
+  });
+}
+getStudentsByGroup(role: string, classe: string, vms: string): Observable<Student[]> {
+  const url = `${this.apiUrl}/students/group`;
+  const params = { classe,role , vms }; // Query parameters
+
+  return this.http.get<Student[]>(url, { params });
 }
 }

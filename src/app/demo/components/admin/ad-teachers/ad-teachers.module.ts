@@ -13,7 +13,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CheckboxModule } from 'primeng/checkbox';
 import { RippleModule } from 'primeng/ripple';
 import { DropdownModule } from 'primeng/dropdown';
+import { MultiSelectModule } from 'primeng/multiselect'; // Added MultiSelectModule
 import { MessageService } from 'primeng/api';
+
 @NgModule({
   declarations: [
     AdTeachersComponent
@@ -31,7 +33,8 @@ import { MessageService } from 'primeng/api';
     InputTextModule,
     CheckboxModule,
     RippleModule,
-    DropdownModule
+    DropdownModule,
+    MultiSelectModule // Added MultiSelectModule to import
   ],
   providers: [MessageService],
   bootstrap: [AdTeachersComponent] // Corrected bootstrap component

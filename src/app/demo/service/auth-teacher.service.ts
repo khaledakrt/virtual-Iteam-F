@@ -8,39 +8,48 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class AuthTeacherService {
 
-  helper = new JwtHelperService();
-role='teacher'
-  constructor(private http: HttpClient) { }
-  private url = 'http://localhost:3000/';
+  private apiUrl = 'http://localhost:3000'; // Adjust with your backend API URL
+  private helper = new JwtHelperService();
+
+  constructor(private http: HttpClient) {}
+
+  getCurrentUser(): any {
+    let token: any = localStorage.getItem('token_teacher');
+    if (token) {
+      let decodedToken: any = this.helper.decodeToken(token);
+      return {
+        id: decodedToken._id,
+        name: decodedToken.name,
+        role: 'teacher' // Assuming role is predefined as 'teacher'
+        // Add more properties as needed
+      };
+    }
+    return null;
+  }
+
+  getLoggedInTeacherDetails(): Observable<any> {
+    const userId = localStorage.getItem('id_teacher'); // Assuming you store teacher's ID in localStorage
+    return this.http.get<any>(`${this.apiUrl}/teacher/${userId}`);
+  }
 
   teacherLogin(credentials: any): Observable<any> {
-    return this.http.post<any>(this.url + 'teacher/login', credentials);
+    return this.http.post<any>(`${this.apiUrl}/teacher/login`, credentials);
   }
-  teacherRegister(userData: any): Observable<any> {
-    return this.http.post<any>(this.url + 'teacher/', userData);
-  }
-  saveDataTeacher(token: any) {
-    console.log('savadata')
-    console.log(token)
 
+  teacherRegister(userData: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/teacher/`, userData);
+  }
+
+  saveDataTeacher(token: any) {
     let decodedToken: any = this.helper.decodeToken(token);
-    console.log('decodedToken')
-    console.log(decodedToken)
     localStorage.setItem('token_teacher', token);
-    localStorage.setItem('role', this.role);
+    localStorage.setItem('role', 'teacher');
     localStorage.setItem('id_teacher', decodedToken._id);
-    localStorage.setItem('name', decodedToken.name); // Store teacher's name
+    localStorage.setItem('name', decodedToken.name);
   }
-  
-  teacherLoggedIn() {
+
+  teacherLoggedIn(): boolean {
     let token: any = localStorage.getItem('token_teacher');
-    if (!token) {
-      return false;
-    }
-    if (this.helper.isTokenExpired(token)) {
-      return false;
-    }
-    return true;
+    return !!token && !this.helper.isTokenExpired(token);
   }
-  
 }

@@ -1,0 +1,28 @@
+/* src/app/demo/component/students-list/students-list.component.css */
+
+.student-item {
+    list-style-type: none;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .student-profile {
+    display: flex;
+    align-items: center;
+  }
+  
+  .student-photo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .student-details {
+    flex: 1;
+  }
+  

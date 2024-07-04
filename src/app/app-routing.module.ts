@@ -46,17 +46,14 @@ import { AdminDashboardComponent } from './demo/components/admin/admin-dashboard
               ]
           },
           {
-            path: 'student', component:StudentDashboardComponent ,
+            path: 'student',
+            component: StudentDashboardComponent,
             children: [
-
               { path: 'profil', loadChildren: () => import('./demo/components/student/student-profil/student-profil.module').then(m => m.StudentProfilModule) },
-              { path: 'teachers', loadChildren: () => import('./demo/components/student/student-profil/student-profil.module').then(m => m.StudentProfilModule) },
+              { path: 'teachers', loadChildren: () => import('./demo/components/student/teachers-list/teachers-list.module').then(m => m.TeachersListModule) },
               { path: 'my-vms', loadChildren: () => import('./demo/components/student/my-vms/my-vms.module').then(m => m.MyVmsModule) }
-
-
-              
             ]
-        },
+          },
             { path: 'auth', loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule) },
 
             { path: 'blocks', loadChildren: () => import('./demo/components/primeblocks/primeblocks.module').then(m => m.PrimeBlocksModule) },
