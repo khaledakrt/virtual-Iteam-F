@@ -1,23 +1,33 @@
-<!-- src/app/demo/component/teachers-list/teachers-list.component.html -->
+<!-- teachers-list.component.html -->
+<div class="grid">
+  <div class="col-md-10">
+    <div class="card px-6 py-6 w-100">
+      <div *ngIf="loading">
+        <p>Loading...</p>
+      </div>
 
-<div *ngIf="teachers.length > 0">
-    <h2>List of Teachers</h2>
-    <ul>
-      <li *ngFor="let teacher of teachers" class="teacher-item">
-        <div class="teacher-profile">
-          <img [src]="getTeacherPhotoUrl(teacher.photo)" alt="Teacher Photo" class="teacher-photo">
-          <div class="teacher-details">
-            <div><strong>Nom:</strong> {{ teacher.nom }}</div>
-            <div><strong>Prénom:</strong> {{ teacher.prenom }}</div>
-            <div><strong>Email:</strong> {{ teacher.email }}</div>
-            <div><strong>Classes:</strong> {{ teacher.classes.join(' | ') }}</div> <!-- Utilisation de join pour séparer par une virgule -->
-          </div>
-        </div>
-      </li>
-    </ul>
+      <div *ngIf="!loading && teachers.length > 0">
+        <h2>Teachers List</h2>
+        <ul class="teachers-list">
+          <li *ngFor="let teacher of teachers; let last = last" class="teacher-item">
+            <div class="teacher-profile">
+              <img [src]="getTeacherPhotoUrl(teacher.photo)" alt="Teacher Photo" class="teacher-photo">
+              <div class="teacher-details">
+                <div><strong>Nom:</strong> {{ teacher.nom }}</div>
+                <div><strong>Prénom:</strong> {{ teacher.prenom }}</div>
+                <div><strong>Email:</strong> {{ teacher.email }}</div>
+                <div><strong>Classe:</strong> {{ studentClasse }}</div> <!-- Affichage de la classe de l'étudiant -->
+                
+              </div>
+            </div>
+            <hr *ngIf="!last">
+          </li>
+        </ul>
+      </div>
+
+      <div *ngIf="!loading && teachers.length === 0">
+        <p>No teachers found for this student's groups.</p>
+      </div>
+    </div>
   </div>
-  
-  <div *ngIf="teachers.length === 0">
-    <p>No teachers found for your group.</p>
-  </div>
-  
+</div>

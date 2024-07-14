@@ -19,6 +19,7 @@ export class AdTeachersComponent implements OnInit {
   teacherDialog: boolean = false;
   deleteTeacherDialog: boolean = false;
   deleteTeachersDialog: boolean = false;
+  
   teacher: Teacher = this.initializeTeacher();
   selectedTeachers: Teacher[] = [];
   submitted: boolean = false;
@@ -31,10 +32,10 @@ export class AdTeachersComponent implements OnInit {
     { field: 'prenom', header: 'Last Name' },
     { field: 'email', header: 'Email' },
     { field: 'password', header: 'Password' },
-    { field: 'role', header: 'Role' },
-    { field: 'specialite', header: 'Specialty' },
+    //{ field: 'role', header: 'Role' },
+    //{ field: 'specialite', header: 'Specialty' },
     { field: 'classes', header: 'Classes' },
-    { field: 'vms', header: 'vms' },
+    //{ field: 'vms', header: 'vms' },
   ];
 
   constructor(private teacherService: TeacherService, private messageService: MessageService) {}
@@ -55,6 +56,7 @@ export class AdTeachersComponent implements OnInit {
   loadTeachers() {
     this.teacherService.getTeachers().subscribe((data) => {
       this.teachers = data;
+      console.log(this.teachers)
     });
   }
 
@@ -75,91 +77,88 @@ export class AdTeachersComponent implements OnInit {
   
 
   saveTeacher() {
-    this.submitted = true;
+  this.submitted = true;
 
-    if (this.teacher.nom && this.teacher.prenom && this.teacher.email && this.teacher.password &&   this.teacher.classes ) {
-      const formData = new FormData();
-      formData.append('nom', this.teacher.nom);
-      formData.append('prenom', this.teacher.prenom);
-      formData.append('email', this.teacher.email);
-      formData.append('password', this.teacher.password);
-      formData.append('role', this.teacher.role);
-      formData.append('specialite', this.teacher.specialite);
+  if (this.teacher.nom && this.teacher.prenom && this.teacher.email && this.teacher.password && this.teacher.classes) {
+    const formData = new FormData();
+    formData.append('nom', this.teacher.nom);
+    formData.append('prenom', this.teacher.prenom);
+    formData.append('email', this.teacher.email);
+    formData.append('password', this.teacher.password);
+    formData.append('specialite', this.teacher.specialite);
 
-      // Add the loop here to append group values
-      for (const groupId in this.teacher.classes) {
-        if (this.teacher.classes[groupId]) {
-          const group = this.groups.find(group => group._id === groupId);
-          if (group) {
-            formData.append('classes', `${group.level} ${group.specialty} ${group.number}`);
-          }
-        }
+    // Add the selected groups to the FormData
+    for (const groupId of Object.keys(this.teacher.classes)) {
+      if (this.teacher.classes[groupId]) {
+        formData.append('classes', groupId);
       }
-      
-      formData.append('vms', this.teacher.vms);
-      if (this.photo) {
-        formData.append('photo', this.photo);
-      }
-
-      if (this.teacher._id) {
-        // Update existing teacher
-        this.teacherService.updateTeacher(this.teacher._id, this.teacher).subscribe(
-          () => {
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Successful',
-              detail: 'Teacher Updated',
-              life: 3000
-            });
-            this.loadTeachers();
-            this.teacherDialog = false;
-            this.teacher = this.initializeTeacher();
-          },
-          (error) => {
-            console.error('Error:', error);
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Error',
-              detail: 'Failed to update teacher',
-              life: 3000
-            });
-          }
-        );
-      } else {
-        // Add new teacher
-        this.teacherService.addTeacher(formData).subscribe(
-          () => {
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Successful',
-              detail: 'Teacher Created',
-              life: 3000
-            });
-            this.loadTeachers();
-            this.teacherDialog = false;
-            this.teacher = this.initializeTeacher();
-          },
-          (error) => {
-            console.error('Error:', error);
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Error',
-              detail: 'Failed to create teacher',
-              life: 3000
-            });
-          }
-        );
-      }
-    } else {
-      // Handle case where required fields are not filled
-      this.messageService.add({
-        severity: 'warn',
-        summary: 'Warning',
-        detail: 'Please fill in all required fields',
-        life: 3000
-      });
     }
+
+    if (this.photo) {
+      formData.append('photo', this.photo);
+    }
+
+    if (this.teacher._id) {
+      // Update existing teacher
+      this.teacherService.updateTeacher(this.teacher._id, formData).subscribe(
+        () => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Successful',
+            detail: 'Teacher Updated',
+            life: 3000
+          });
+          this.loadTeachers();
+          this.teacherDialog = false;
+          this.teacher = this.initializeTeacher();
+        },
+        (error) => {
+          console.error('Error:', error);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Failed to update teacher',
+            life: 3000
+          });
+        }
+      );
+    } else {
+      // Add new teacher
+      this.teacherService.addTeacher(formData).subscribe(
+        () => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Successful',
+            detail: 'Teacher Created',
+            life: 3000
+          });
+          this.loadTeachers();
+          this.teacherDialog = false;
+          this.teacher = this.initializeTeacher();
+        },
+        (error) => {
+          console.error('Error:', error);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Failed to create teacher',
+            life: 3000
+          });
+        }
+      );
+    }
+  } else {
+    // Handle case where required fields are not filled
+    this.messageService.add({
+      severity: 'warn',
+      summary: 'Warning',
+      detail: 'Please fill in all required fields',
+      life: 3000
+    });
   }
+}
+
+  
 
 
   deleteSelectedTeachers() {
@@ -172,9 +171,21 @@ export class AdTeachersComponent implements OnInit {
 
   deleteTeacher(teacher: Teacher) {
     this.teacher = { ...teacher };
-    this.deleteTeacherDialog = true;
+    this.deleteTeacherDialog = true; // Ensure this sets the dialog to visible
   }
-
+  
+  
+  
+  
+  deleteConfirmed(teacher: Teacher) {
+    // Implement deletion logic here
+    console.log(`Deleting teacher: ${teacher.nom} ${teacher.prenom}`);
+    // Close the dialog after deletion
+    this.hideDialog();
+  }
+  
+  // Method to hide the dialog
+ 
   confirmDeleteSelected() {
     this.deleteTeachersDialog = false;
     const selectedIds = this.selectedTeachers.map((teacher) => teacher._id);
@@ -242,6 +253,8 @@ export class AdTeachersComponent implements OnInit {
         this.teacher.classes = {}; // Initialize classes if not already initialized
     }
     this.teacher.classes[groupId] = event.target.checked;
+    console.log("here is groupe id ")
+    console.log(groupId)
     this.updateSelectedClasses(); // Update selected classes when a group is selected/deselected
   }
   updateSelectedClasses() {
@@ -250,6 +263,8 @@ export class AdTeachersComponent implements OnInit {
       if (this.teacher.classes[groupId]) {
         // Find the corresponding group object and push its details to the selectedClasses array
         const group = this.groups.find(group => group._id === groupId);
+        console.log("here is groupe id ")
+        console.log(group.id)
         if (group) {
           this.selectedClasses.push(`${group.level} ${group.specialty} ${group.number}`);
         }

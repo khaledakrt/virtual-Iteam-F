@@ -5,19 +5,18 @@
       <div class="profile-container">
         <div class="profile-container">
           <div class="photo-placeholder">
-            <!-- Use the correct method name -->
-            <img src="{{ getTeacherPhotoUrl(teacherData?.photo) }}" alt="Teacher Photo">
+            <img [src]="getTeacherPhotoUrl(teacherData?.photo)" alt="Teacher Photo">
           </div>
           <div class="teacher-details">
-            <!-- Replace references to studentData with teacherData -->
             <div><strong>Nom:</strong> {{ teacherData?.nom }}</div>
             <div><strong>Prénom:</strong> {{ teacherData?.prenom }}</div>
             <div><strong>Email:</strong> {{ teacherData?.email }}</div>
-            <!-- <div><strong>Specialité:</strong> {{ teacherData?.specialite }}</div> -->
-            <div><strong>Classes: <br></strong> {{ teacherData?.classes }}</div><br>
-            
-            <!-- <div><strong>Groupe:</strong> {{ teacherData?.vms }}</div> -->
-
+            <div><strong>Classes:</strong></div>
+            <ul>
+              <li *ngFor="let groupId of teacherData?.classes">
+                {{ formatClasses([groupId]) }}
+              </li>
+            </ul>
           </div>
         </div>
       </div>

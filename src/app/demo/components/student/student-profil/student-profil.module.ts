@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 import { StudentProfilRoutingModule } from './student-profil-routing.module';
 import { StudentProfilComponent } from './student-profil/student-profil.component';
@@ -26,6 +27,7 @@ import { DialogModule } from 'primeng/dialog';
   imports: [
     CommonModule,
     StudentProfilRoutingModule,
+    ConfirmDialogModule,
     FormsModule,
     TableModule,
     FileUploadModule,

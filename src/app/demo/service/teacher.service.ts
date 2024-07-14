@@ -31,8 +31,8 @@ export class TeacherService {
     });
   }
 
-  updateTeacher(id: string, teacher: Teacher): Observable<Teacher> {
-    return this.http.put<Teacher>(`${this.apiUrl}/${id}`, teacher, {
+  updateTeacher(id: string, formData: FormData): Observable<Teacher> {
+    return this.http.put<Teacher>(`${this.apiUrl}/${id}`, formData, {
       headers: { 'enctype': 'multipart/form-data' }
     });
   }
@@ -71,5 +71,19 @@ export class TeacherService {
     
     return this.http.get<Teacher[]>(`${this.apiUrl}/teachers/group`, { params });
   }
+ 
+  getTeachersByGroup(groupId: string): Observable<any[]> {
+    const url = `${this.apiUrl}/teachers?groupId=${groupId}`; // Adjust API endpoint and query parameters as per your backend API
+    return this.http.get<any[]>(url);
+  }
 
+
+
+  // Fetch classes by teacher ID
+  getClassesByTeacherId(teacherId: string): Observable<Group[]> {
+    return this.http.get<Group[]>(`${this.apiUrl}/${teacherId}/classes`);
+  }
+  getTeachersByGroupId(groupId: string): Observable<Teacher[]> {
+    return this.http.get<Teacher[]>(`${this.apiUrl}/teachersByGroupId/${groupId}`);
+  }
 }

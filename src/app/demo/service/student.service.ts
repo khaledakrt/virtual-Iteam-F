@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Student } from '../api/student';
+import { Group } from '../api/group'; // Import the Group interface
+import { Teacher } from '../api/teacher';
 
 
 @Injectable({
@@ -37,8 +39,8 @@ export class StudentService {
     //return this.http.post<Student>(this.apiUrl+'/register', student);
   //}
 
-  updateStudent(id: string, student: Student): Observable<Student> {
-    return this.http.put<Student>(`${this.apiUrl}/${id}`, student);
+  updateStudent(studentId: string, formData: FormData): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/students/${studentId}`, formData);
   }
 
   deleteStudent(id: string): Observable<void> {
@@ -90,4 +92,28 @@ getStudentsByGroup(role: string, classe: string, vms: string): Observable<Studen
 
   return this.http.get<Student[]>(url, { params });
 }
+// Add the new function to fetch groups
+getGroups(): Observable<Group[]> {
+  return this.http.get<Group[]>('http://localhost:3000/group/groups');
 }
+
+
+getStudentsByGroupId(groupId: string): Observable<any[]> {
+  const url = `${this.apiUrl}/studentsByGroupId/${groupId}`;
+  return this.http.get<Student[]>(url);
+}
+getClasseByStudentId(studentId: string): Observable<Group[]> {
+  return this.http.get<Group[]>(`${this.apiUrl}/${studentId}/classe`);
+}
+getTeachersByStudentGroup(studentId: string): Observable<Teacher[]> {
+  return this.http.get<Teacher[]>(`${this.apiUrl}/teachersByStudentId/${studentId}`);
+}
+getTeachersByStudentGroupId(studentGroupId: string): Observable<Teacher[]> {
+  return this.http.get<Teacher[]>(`${this.apiUrl}/teachersByStudentGroupId/${studentGroupId}`);
+}
+getGroupIdByStudentId(studentId: string): Observable<string> {
+  return this.http.get<string>(`${this.apiUrl}/${studentId}/classe`);
+}
+
+}
+

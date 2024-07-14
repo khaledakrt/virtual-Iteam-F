@@ -1,21 +1,39 @@
-<div *ngIf="students.length > 0">
-  <h2>My Students</h2>
-  <ul>
-    <li *ngFor="let student of students" class="student-item">
-      <div class="student-profile">
-        <img [src]="getStudentPhotoUrl(student.photo)" alt="Student Photo" class="student-photo">
-        <div class="student-details">
-          <div><strong>Nom:</strong> {{ student.nom }}</div>
-          <div><strong>Prénom:</strong> {{ student.prenom }}</div>
-          <div><strong>Email:</strong> {{ student.email }}</div>
-          <div><strong>Classe:</strong> {{ student.classe }} {{ student.role }} {{ student.vms }}</div>
-          <!-- Add other student details as needed -->
-        </div>
-      </div>
-    </li>
-  </ul>
-</div>
+<div class="grid">
+  <div class="col-md-10"> <!-- Utilisation de col-md-10 pour une largeur plus grande sur les écrans moyens et supérieurs -->
+    <div class="card px-6 py-6 w-100"> <!-- Utilisation de w-100 pour une largeur de 100% -->
+      <p-toast></p-toast>
+      <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+          <div class="my-2 button-group">
+            <ng-container *ngFor="let group of classes">
+              <button type="button" class="p-button p-button-rounded px-4" (click)="onClassButtonClick(group)">
+                {{ group.level }} {{ group.specialty }} {{ group.number }}
+              </button>
+            </ng-container>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="right"></ng-template>
+      </p-toolbar>
 
-<div *ngIf="students.length === 0">
-  <p>No students found for the teacher's groups.</p>
+      <div *ngIf="students.length > 0">
+        <h2>My Students</h2>
+        <ul class="students-list">
+          <li *ngFor="let student of students" class="student-item">
+            <div class="student-profile">
+              <img [src]="getStudentPhotoUrl(student.photo)" alt="Student Photo" class="student-photo">
+              <div class="student-details">
+                <div><strong>Nom:</strong> {{ student.nom }}</div>
+                <div><strong>Prénom:</strong> {{ student.prenom }}</div>
+                <div><strong>Email:</strong> {{ student.email }}</div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div *ngIf="students.length === 0">
+        <p>No students found for the selected class.</p>
+      </div>
+    </div>
+  </div>
 </div>

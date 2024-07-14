@@ -12,8 +12,20 @@
         <ng-template pTemplate="right"></ng-template>
       </p-toolbar>
 
-      <p-table [value]="teachers" [columns]="cols" responsiveLayout="scroll" [globalFilterFields]="['nom','prenom','email','specialite']" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedTeachers" selectionMode="multiple" [rowHover]="true" dataKey="_id">
+      <p-table 
+        [value]="teachers" 
+        [columns]="cols" 
+        responsiveLayout="scroll" 
+        [globalFilterFields]="['nom', 'prenom', 'email', 'specialite', 'classes']" 
+        [paginator]="true" 
+        [rows]="10" 
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
+        [(selection)]="selectedTeachers" 
+        selectionMode="multiple" 
+        [rowHover]="true" 
+        dataKey="_id"
+      >
         <ng-template pTemplate="caption">
           <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
             <h5 class="m-0">Manage Teachers</h5>
@@ -31,7 +43,6 @@
             <th pSortableColumn="nom">First Name <p-sortIcon field="nom"></p-sortIcon></th>
             <th pSortableColumn="prenom">Last Name <p-sortIcon field="prenom"></p-sortIcon></th>
             <th pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon></th>
-            <!-- <th pSortableColumn="specialite">Specialty <p-sortIcon field="specialite"></p-sortIcon></th> -->
             <th pSortableColumn="classes">Classes <p-sortIcon field="classes"></p-sortIcon></th>
             <th></th>
           </tr>
@@ -43,23 +54,33 @@
             </td>
             <td style="width: 20%;">
               <span class="p-column-title">First Name</span>
-              {{teacher.nom}}
+              {{ teacher.nom }}
             </td>
             <td style="width: 20%;">
               <span class="p-column-title">Last Name</span>
-              {{teacher.prenom}}
+              {{ teacher.prenom }}
             </td>
             <td style="width: 20%;">
               <span class="p-column-title">Email</span>
-              {{teacher.email}}
-            </td>
-            <td style="width: 20%;">
-              <span class="p-column-title">Specialty</span>
-              {{teacher.specialite}}
+              {{ teacher.email }}
             </td>
             <td style="width: 20%;">
               <span class="p-column-title">Classes</span>
-              {{teacher.classes}}
+              <ul>
+                <ng-container *ngFor="let groupId of teacher.classes; let last = last">
+                  <li>
+                    <!-- Afficher les informations du groupe à partir de `groups` -->
+                    <ng-container *ngFor="let group of groups">
+                      <div *ngIf="group._id === groupId">
+                        <!-- Afficher le niveau, la spécialité et le numéro du groupe -->
+                        - {{ group.level }} {{ group.specialty }} {{ group.number }}
+                      </div>
+                    </ng-container>
+                    <!-- Ajouter un retour à la ligne si ce n'est pas le dernier groupe -->
+                    <span *ngIf="!last"></span>
+                  </li>
+                </ng-container>
+              </ul>
             </td>
             <td>
               <div class="flex">
@@ -74,7 +95,7 @@
   </div>
 </div>
 
-<p-dialog [(visible)]="teacherDialog" [style]="{width: '450px'}" header="Teacher Details" [modal]="true" class="p-fluid">
+<p-dialog [(visible)]="teacherDialog" [style]="{width: '700px'}" header="Teacher Details" [modal]="true" class="p-fluid">
   <ng-template pTemplate="content">
     <div class="p-field">
       <label for="nom">First Name</label>
@@ -89,45 +110,53 @@
       <input id="email" type="email" [(ngModel)]="teacher.email" pInputText required>
     </div>
     <div class="p-field">
-      <label for="password">Password</label>
+      <label for="password">Password:</label>
       <input id="password" type="password" [(ngModel)]="teacher.password" pInputText required>
     </div>
-    <!-- <div class="p-field">
-      <label for="role">Role</label>
-      <input id="role" type="text" [(ngModel)]="teacher.role" pInputText required>
-    </div>
-    <div class="p-field">
-      <label for="specialite">Specialty</label>
-      <input id="specialite" type="text" [(ngModel)]="teacher.specialite" pInputText required>
-    </div> -->
-    <div class="p-field">
+    
+    <div class="p-field mt-3">
       <label for="groups">Groups:</label>
-      <div *ngFor="let group of groups">
-        <input type="checkbox" id="{{group._id}}" name="groups" [checked]="isGroupSelected(group._id)" (change)="handleGroupChange($event, group._id)">
-        <label for="{{group._id}}">{{group.level}} {{group.specialty}} {{group.number}}</label>
+      <!-- Checkbox lists for groups -->
+      <div class="flex flex-wrap">
+        <ng-container *ngFor="let group of groups">
+          <div class="w-1/3">
+            <input type="checkbox" id="{{group._id}}" name="groups" [checked]="selectedClasses.includes(group._id)" (change)="handleGroupChange($event, group._id)">
+            <label for="{{group._id}}" class="checkbox-label">{{group.level}} {{group.specialty}} {{group.number}}</label>
+          </div>
+        </ng-container>
       </div>
     </div>
     
-    <div>
-      <h3>Selected Classes:</h3>
+    <div class="p-field mt-3 border-top">
+      <h3 class="section-title">Selected Classes:</h3>
       <ul>
         <li *ngFor="let classKey of selectedClasses">{{ classKey }}</li>
       </ul>
     </div>
-    <!-- <div class="p-field">
-      <label for="vms">VMS</label>
-      <input id="vms" type="text" [(ngModel)]="teacher.vms" pInputText required>
-    </div> -->
-    <div class="p-field">
-      <label for="photo">Photo</label>
+    <div class="p-field mt-3 border-top">
+
+    <div class="p-field mt-3">
+      <label for="photo">Photo:</label>
       <input type="file" id="photo" (change)="handlePhotoChange($event)">
     </div>
+  </div>
+
   </ng-template>
-  
   <ng-template pTemplate="footer">
     <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
     <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveTeacher()"></button>
   </ng-template>
+</p-dialog>
+
+<!-- Dialog component for confirming deletion of a teacher -->
+<p-dialog [(visible)]="deleteTeacherDialog" header="Confirm Deletion" [modal]="true" [style]="{ width: '450px' }">
+  <div class="p-dialog-content">
+    <p>Are you sure you want to delete {{ teacher.nom }} {{ teacher.prenom }}?</p>
+  </div>
+  <p-footer>
+    <button type="button" pButton label="Cancel" icon="pi pi-times" class="p-button-text" (click)="deleteTeacherDialog = false"></button>
+    <button type="button" pButton label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="confirmDelete()"></button>
+  </p-footer>
 </p-dialog>
 
 <!-- Delete Teachers Dialog -->
@@ -137,6 +166,7 @@
     <span>Are you sure you want to delete selected teachers?</span>
   </div>
   <ng-template pTemplate="footer">
+    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteTeacher(teacher)"></button>
     <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteTeachersDialog = false"></button>
     <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSelected()"></button>
   </ng-template>

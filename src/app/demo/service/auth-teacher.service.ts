@@ -11,6 +11,8 @@ export class AuthTeacherService {
   private apiUrl = 'http://localhost:3000'; // Adjust with your backend API URL
   private helper = new JwtHelperService();
 
+
+  
   constructor(private http: HttpClient) {}
 
   getCurrentUser(): any {
@@ -46,6 +48,7 @@ export class AuthTeacherService {
     localStorage.setItem('role', 'teacher');
     localStorage.setItem('id_teacher', decodedToken._id);
     localStorage.setItem('name', decodedToken.name);
+    
   }
 
   teacherLoggedIn(): boolean {

@@ -9,10 +9,16 @@
             <img src="{{ getStudentPhotoUrl(studentData?.photo) }}" alt="Student Photo">
           </div>
           <div class="student-details">
-          <div><strong>Nam:</strong> {{ studentData?.nom }}</div>
-          <div><strong>Prénom:</strong> {{ studentData?.prenom }}</div>
-          <div><strong>Email:</strong> {{ studentData?.email }}</div>
-          <div><strong>Classe:</strong> {{ studentData?.classe }} {{ studentData?.role }} {{ studentData?.vms }}</div>
+            <!-- Replace references to studentData with teacherData -->
+            <div><strong>Nom:</strong> {{ studentData?.nom }}</div>
+            <div><strong>Prénom:</strong> {{ studentData?.prenom }}</div>
+            <div><strong>Email:</strong> {{ studentData?.email }}</div>
+            <!-- <div><strong>Specialité:</strong> {{ teacherData?.specialite }}</div> -->
+            <div><strong>Classe: <br></strong> {{ studentData?.classe }}</div><br>
+            
+            <!-- <div><strong>Groupe:</strong> {{ teacherData?.vms }}</div> -->
+
+          </div>
         </div>
       </div>
     </div>
