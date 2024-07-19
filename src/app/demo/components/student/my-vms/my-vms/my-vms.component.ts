@@ -1,38 +1,95 @@
 import { Component, OnInit } from '@angular/core';
-import { MessageService } from 'primeng/api';
+import { InstanceService } from 'src/app/demo/service/Instance.Service';
+import { AuthStudentService } from 'src/app/demo/service/auth-student.service'; // Assurez-vous d'importer correctement votre service d'authentification étudiant
 
 @Component({
   selector: 'app-my-vms',
   templateUrl: './my-vms.component.html',
-  styleUrls: ['./my-vms.component.scss'],
-  providers: [MessageService], // Add the provider here
+  styleUrls: ['./my-vms.component.scss']
 })
-export class MyVmsComponent {
-  selectedView: string = 'Cloud'; // Default selected view
-  
-  // Placeholder data for the tables
-  cloudData: any[] = [
-    { id: 1, name: 'Cloud Data 1', region: 'Region A', status: 'Active', instanceType: 'Type 1', createdDate: '2024-05-31' },
-    { id: 2, name: 'Cloud Data 2', region: 'Region B', status: 'Inactive', instanceType: 'Type 2', createdDate: '2024-05-30' },
-    // Add more placeholder data as needed
-  ];
+export class MyVmsComponent implements OnInit {
+  instances: any[] = []; // Tableau pour stocker les instances
+  securityGroupAdded: string | null = null; // Variable pour stocker le nom du groupe de sécurité ajouté
+  floatingIpAdded: string | null = null; // Variable pour stocker l'adresse IP flottante ajoutée
+  defaultSecurityGroupName = 'Groupe1'; // Nom du groupe de sécurité par défaut
 
-  bigData: any[] = [
-    { id: 1, name: 'Big Data 1', size: 'Small', status: 'Active', cluster: 'Cluster A', location: 'Location 1' },
-    { id: 2, name: 'Big Data 2', size: 'Large', status: 'Inactive', cluster: 'Cluster B', location: 'Location 2' },
-    // Add more placeholder data as needed
-  ];
+  constructor(
+    private instanceService: InstanceService,
+    private authStudentService: AuthStudentService
+  ) {}
 
-  reseauData: any[] = [
-    { id: 1, name: 'Reseau 1', subnet: 'Subnet A', gateway: 'Gateway 1', status: 'Active', vlan: 'VLAN 1' },
-    { id: 2, name: 'Reseau 2', subnet: 'Subnet B', gateway: 'Gateway 2', status: 'Inactive', vlan: 'VLAN 2' },
-    // Add more placeholder data as needed
-  ];
+  ngOnInit() {
+    // Récupération de l'ID de l'étudiant connecté
+    const studentId = this.authStudentService.getLoggedInStudentId();
 
-  constructor() {}
+    if (studentId) {
+      // Appel du service pour récupérer les instances par ID d'étudiant
+      this.instanceService.getInstancesByStudentId(studentId).subscribe(
+        (data) => {
+          this.instances = data; // Assignation des données récupérées au tableau instances
+        },
+        (error) => {
+          console.error('Erreur lors de la récupération des instances:', error);
+        }
+      );
+    } else {
+      console.error('ID de l\'étudiant connecté non trouvé.');
+    }
+  }
 
-  // Method to update selected view
-  updateSelectedView(view: string) {
-    this.selectedView = view;
+  startInstance(instanceId: string) {
+    this.instanceService.startInstance(instanceId).subscribe(
+      (response) => {
+        console.log('Instance started successfully:', response);
+        // Vous pouvez ajouter un code pour mettre à jour l'interface utilisateur si nécessaire
+      },
+      (error) => {
+        console.error('Erreur lors du démarrage de l\'instance:', error);
+      }
+    );
+  }
+
+  stopInstance(instanceId: string) {
+    this.instanceService.stopInstance(instanceId).subscribe(
+      (response) => {
+        console.log('Instance stopped successfully:', response);
+        // Vous pouvez ajouter un code pour mettre à jour l'interface utilisateur si nécessaire
+      },
+      (error) => {
+        console.error('Erreur lors de l\'arrêt de l\'instance:', error);
+      }
+    );
+  }
+
+  assignFloatingIp(instanceId: string) {
+    this.instanceService.assignFloatingIp(instanceId).subscribe(
+      (response) => {
+        console.log('Floating IP assigned successfully:', response);
+        if (response && response.message) {
+          this.floatingIpAdded = response.message;
+        }
+        // Mettez à jour l'interface utilisateur si nécessaire
+      },
+      (error) => {
+        console.error('Erreur lors de l\'assignation de l\'adresse IP flottante:', error);
+      }
+    );
+  }
+
+  assignSecurityGroup(instanceId: string) {
+    this.instanceService.assignSecurityGroup(instanceId).subscribe(
+      (response) => {
+        console.log('Security group assigned successfully:', response);
+        if (response && response.message) {
+          this.securityGroupAdded = response.message; // Utilisez la réponse du backend si elle contient le nom du groupe
+        } else {
+          this.securityGroupAdded = this.defaultSecurityGroupName; // Utilisez le nom par défaut si la réponse du backend ne contient pas le nom du groupe
+        }
+        // Mettez à jour l'interface utilisateur si nécessaire
+      },
+      (error) => {
+        console.error('Erreur lors de l\'assignation du groupe de sécurité:', error);
+      }
+    );
   }
 }

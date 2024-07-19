@@ -15,4 +15,26 @@
     flex: 5; /* Les boutons s'étendent pour remplir l'espace disponible */
     margin-right: 20px; /* Ajoute un espacement entre les boutons */
   }
+  .custom-button {
+    font-size: 14px; /* Taille de la police */
+    padding: 6px 14px; /* Espacement interne */
+    background-color: #160444; /* Couleur de fond */
+    color: white; /* Couleur du texte */
+    border: none; /* Suppression de la bordure */
+    cursor: pointer; /* Curseur en main */
+  }
   
+  .custom-button:hover {
+    background-color: #160444; /* Couleur de fond au survol */
+  }
+
+
+.button-container {
+  display: flex;
+  justify-content: space-between; /* Pour espacer les boutons horizontalement */
+  margin-top: 10px; /* Espacement au-dessus des boutons */
+}
+
+.custom-button {
+  margin-bottom: 10px; /* Espacement vertical entre les boutons */
+}

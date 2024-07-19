@@ -23,10 +23,10 @@ export class MyRequestsComponent implements OnInit {
     senderName: '',
     groupe: '',
     nombreLabs: '',
-    systemExploitation: '',
-    baseDonnee: '',
-    runTimeEnvironnement: '',
-    webServer: ''
+    systemExploitation: '', // Initialisé à une chaîne vide
+    baseDonnee: '', // Initialisé à une chaîne vide
+    runTimeEnvironnement: '', // Initialisé à une chaîne vide
+    webServer: '' // Initialisé à une chaîne vide
   };
   sentSuccessfully: boolean = false;
   view: string = 'formulerRequest';
@@ -101,8 +101,7 @@ export class MyRequestsComponent implements OnInit {
 
     const classNames = classIds.map(classId => {
       const group = this.groups.find(group => group._id === classId);
-      return ` ${group.level} ${group.specialty} ${group.number}`;
-
+      return ` ${group?.level} ${group?.specialty} ${group?.number}`; // Utilisation de ?. pour éviter les erreurs si group est null ou undefined
     });
 
     return classNames.join(', ');
@@ -140,9 +139,7 @@ export class MyRequestsComponent implements OnInit {
   }
 
   isFormValid(): boolean {
-    return !!this.formData.nombreLabs && !!this.formData.systemExploitation &&
-      !!this.formData.baseDonnee && !!this.formData.runTimeEnvironnement &&
-      !!this.formData.webServer && !!this.selectedGroup;
+    return !!this.formData.nombreLabs && !!this.selectedGroup;
   }
 
   clearForm(): void {
@@ -150,10 +147,10 @@ export class MyRequestsComponent implements OnInit {
       senderName: '',
       groupe: '',
       nombreLabs: '',
-      systemExploitation: '',
-      baseDonnee: '',
-      runTimeEnvironnement: '',
-      webServer: ''
+      systemExploitation: '', // Initialisé à une chaîne vide
+      baseDonnee: '', // Initialisé à une chaîne vide
+      runTimeEnvironnement: '', // Initialisé à une chaîne vide
+      webServer: '' // Initialisé à une chaîne vide
     };
     this.selectedGroup = null;
   }

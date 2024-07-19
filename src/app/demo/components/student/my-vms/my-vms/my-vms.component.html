@@ -6,89 +6,60 @@
         <ng-template pTemplate="left">
           <div class="my-2" class="button-group">
             <button pButton label="Cloud" (click)="updateSelectedView('Cloud')"></button>
-            <button pButton label="Big DATA" (click)="updateSelectedView('Big DATA')"></button>
-            <button pButton label="Reseau" (click)="updateSelectedView('Reseau')"></button>
+            <!-- Ajoutez d'autres boutons pour les autres vues si nécessaire -->
           </div>
         </ng-template>
         <ng-template pTemplate="right"></ng-template>
       </p-toolbar>
 
-      <!-- Cloud View -->
-      <ng-container *ngIf="selectedView === 'Cloud'">
-        <p-table [value]="cloudData" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+      <!-- Affichage des instances -->
+      <ng-container *ngIf="instances.length > 0">
+        <p-table [value]="instances" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedCloudData"
           selectionMode="multiple" [rowHover]="true" dataKey="id">
           <ng-template pTemplate="header">
             <tr>
-              <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
-              <th pSortableColumn="region">Region <p-sortIcon field="region"></p-sortIcon></th>
-              <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon></th>
-              <th pSortableColumn="instanceType">Instance Type <p-sortIcon field="instanceType"></p-sortIcon></th>
-              <th pSortableColumn="createdDate">Created Date <p-sortIcon field="createdDate"></p-sortIcon></th>
+              <th pSortableColumn="name_instance">Name <p-sortIcon field="name_instance"></p-sortIcon></th>
+              <th>State</th>
+              <th>Action</th>
+              <th>Groupe de sécurité ajouté</th>
+              <th>IP flottante ajoutée</th>
+              <!-- Ajoutez d'autres colonnes nécessaires -->
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-rowData>
             <tr>
-              <td>{{ rowData.name }}</td>
-              <td>{{ rowData.region }}</td>
-              <td>{{ rowData.status }}</td>
-              <td>{{ rowData.instanceType }}</td>
-              <td>{{ rowData.createdDate }}</td>
+              <td>{{ rowData.name_instance }}</td>
+              <td>
+                <span [ngClass]="{'text-green-500': rowData.state === 'ACTIVE', 'text-red-500': rowData.state !== 'ACTIVE'}">
+                  {{ rowData.state }}
+                </span>
+              </td>
+              <td>
+                <div>
+                  <button pButton label="Start" (click)="startInstance(rowData.id_instance)"
+                          [disabled]="rowData.state === 'ACTIVE'" class="custom-button"></button>
+              
+                  <button pButton label="Stop" (click)="stopInstance(rowData.id_instance)"
+                          [disabled]="rowData.state !== 'ACTIVE'" class="custom-button"></button>
+              
+                  <button pButton label="Assign Security Group" (click)="assignSecurityGroup(rowData.id_instance)"
+                          class="custom-button"></button>
+              
+                  <button pButton label="Assign Floating IP" (click)="assignFloatingIp(rowData.id_instance)"
+                          class="custom-button"></button>
+              </div>
+              
+              </td>
+              <td>{{ securityGroupAdded }}</td>
+              <td>{{ floatingIpAdded }}</td>
+              <!-- Affichez d'autres données nécessaires -->
             </tr>
           </ng-template>
         </p-table>
       </ng-container>
-
-      <!-- Big DATA View -->
-      <ng-container *ngIf="selectedView === 'Big DATA'">
-        <p-table [value]="bigData" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedBigData"
-          selectionMode="multiple" [rowHover]="true" dataKey="id">
-          <ng-template pTemplate="header">
-            <tr>
-              <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
-              <th pSortableColumn="size">Size <p-sortIcon field="size"></p-sortIcon></th>
-              <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon></th>
-              <th pSortableColumn="cluster">Cluster <p-sortIcon field="cluster"></p-sortIcon></th>
-              <th pSortableColumn="location">Location <p-sortIcon field="location"></p-sortIcon></th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-rowData>
-            <tr>
-              <td>{{ rowData.name }}</td>
-              <td>{{ rowData.size }}</td>
-              <td>{{ rowData.status }}</td>
-              <td>{{ rowData.cluster }}</td>
-              <td>{{ rowData.location }}</td>
-            </tr>
-          </ng-template>
-        </p-table>
-      </ng-container>
-
-      <!-- Reseau View -->
-      <ng-container *ngIf="selectedView === 'Reseau'">
-        <p-table [value]="reseauData" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedReseauData"
-          selectionMode="multiple" [rowHover]="true" dataKey="id">
-          <ng-template pTemplate="header">
-            <tr>
-              <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
-              <th pSortableColumn="subnet">Subnet <p-sortIcon field="subnet"></p-sortIcon></th>
-              <th pSortableColumn="gateway">Gateway <p-sortIcon field="gateway"></p-sortIcon></th>
-              <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon></th>
-              <th pSortableColumn="vlan">VLAN <p-sortIcon field="vlan"></p-sortIcon></th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-rowData>
-            <tr>
-              <td>{{ rowData.name }}</td>
-              <td>{{ rowData.subnet }}</td>
-              <td>{{ rowData.gateway }}</td>
-              <td>{{ rowData.status }}</td>
-              <td>{{ rowData.vlan }}</td>
-            </tr>
-          </ng-template>
-        </p-table>
+      <ng-container *ngIf="instances.length === 0">
+        <p>No instances found for this student.</p>
       </ng-container>
     </div>
   </div>

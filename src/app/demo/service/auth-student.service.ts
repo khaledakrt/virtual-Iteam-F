@@ -43,5 +43,12 @@ export class AuthStudentService {
     }
     return true;
   }
-  
+  getLoggedInStudentId(): string | null {
+    const token = localStorage.getItem('token_student');
+    if (token) {
+      const decodedToken: any = this.helper.decodeToken(token);
+      return decodedToken._id;
+    }
+    return null;
+  }
 }
